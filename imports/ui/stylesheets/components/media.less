@@ -1,0 +1,60 @@
+.thumbnail-wrapper:hover>.thumbnail-hover {
+    opacity: 1;
+}
+
+.thumbnail-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    position: relative;
+
+    >.thumbnail {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        object-fit: cover;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        >i {
+            font-size: var(--font-h1);
+
+            color: var(--color-dark);
+        }
+    }
+
+    >.thumbnail-hover {
+
+        opacity: 0;
+        cursor: pointer;
+
+        width: 100%;
+        height: 102%;
+        position: relative;
+        background-color: var(--color-dark-lighter);
+        -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: center;
+        justify-content: center;
+        top: -102%;
+
+        >i {
+            color: var(--color-light);
+            font-size: var(--font-h1);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<template name="select_files">
+    
+    <a class="btn btn-success" pd-popup-open="popupFileSelect" href="#">Open Modal</a>
+    <div class="popup" pd-popup="popupFileSelect" pd-popup-close="popupFileSelect">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>File type goes here [video, image, etc]</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupFileSelect"> clear</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="popup-content">
+                    <div class="full-col">
+                        {{#each file in files}}
+
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="popup-footer">
+                    footer
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</template>

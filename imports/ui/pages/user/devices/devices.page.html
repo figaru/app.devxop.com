@@ -1,0 +1,125 @@
+<template name="Devices">
+    <div id="devices-container">
+
+        <div class="devices-wrapper">
+            <div class="Rtable Rtable--5cols cell-head Rtable--collapse">
+
+                <div style="order:1" class="Rtable-cell cell-header Rtable-cell--head">
+                    Name
+                </div>
+                <div style="order:1" class="Rtable-cell cell-header">
+                    Status
+                </div>
+                <div style="order:1" class="Rtable-cell cell-header">
+                    Display
+                </div>
+                <div style="order:1" class="Rtable-cell cell-header">
+                    Runtime
+                </div>
+                <div style="order:1" class="Rtable-cell cell-header">
+                    Update
+                </div>
+
+
+                <div style="order:2" class="Rtable-cell cell-data Rtable-cell--head">
+                    <div class="img">
+                        {{> img url="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/thumb.jpeg"}}
+                    </div>
+
+                    <div class="content">
+                        Device name here
+
+                        <div class="placeholder">Description is here for the device</div>
+                    </div>
+                </div>
+                <div style="order:2" class="Rtable-cell cell-data">
+                    Status
+                </div>
+                <div style="order:2" class="Rtable-cell cell-data">
+                    Runtime
+                </div>
+                <div style="order:2" class="Rtable-cell cell-data">
+                    Display
+                </div>
+                <div style="order:2" class="Rtable-cell cell-data">
+                    <a class="btn btn-success" pd-popup-open="popupDevice" href="#">Open Modal</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</template>
+
+<template name="Devices_edit">
+    <div class="popup" pd-popup="popupDevice" pd-popup-close="popupDevice">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>Device name goes here</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupDevice"> clear</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="popup-content">
+                    <div class="left-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <h4>Details</h4>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Add a name that describes the device" value=test label="Name"}}
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                {{> text_input eventId="deviceEdit" style="min-height: 100px" maxLength=1000 key="description" placeholder="Describe what this device does" value=test label="Description"}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 pb-1">
+                                <h6>Template</h6>
+                                <div class="sub-label">Select the display template you want to edit for the current
+                                    device.</div>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                <div style="max-width: 280px;">
+                                    {{> dropdown_input eventId="deviceEdit" list=test label="Video"}}
+                                </div>
+
+                            </div>
+                        </div>
+                        {{#if canSelectFile "video"}}
+                        <div class="row">
+                            <div class="col-xs-12 pb-1">
+                                {{> select_files eventId="deviceEdit" fileTypes="video"}}
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="right-col">
+
+                    </div>
+                </div>
+
+                <div class="popup-footer">
+                    footer
+                </div>
+            </div>
+
+            <!-- <h1>Wow! This is Awesome!</h1>
+            <p>Many people are getting problem in using bootstrap modal, so here I'm with custom modal which you can use
+                anywhere.</p>
+            <p><a pd-popup-close="popupDevice" href="#" class="btn btn-danger">Close</a></p>
+            <a class="popup-close" pd-popup-close="popupDevice" href="#"> </a> -->
+        </div>
+    </div>
+</template>

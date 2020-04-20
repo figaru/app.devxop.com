@@ -1,0 +1,90 @@
+<template name="Media">
+    <!-- MEDIA STATS GO HERE -->
+    <div class="media-container">
+        <div class="media-stats">
+            <div class="stat">
+                <div class="stat-label">
+                    <h5>Total Files</h5>
+                </div>
+                <div class="stat-value">
+                    <h4>{{stats.total_files}}</h4>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">
+                    <h5>Storage Used</h5>
+                </div>
+                <div class="stat-value">
+                    <h4>{{formatBytes stats.storage_used}}</h4>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">
+                    <h5>Plan Quota</h5>
+                </div>
+                <div class="stat-value">
+                    <h4>1Gb</h4>
+                </div>
+            </div>
+        </div>
+        <div class="media-content">
+            <div class="media-nav">
+                <div class="nav-list">
+                    <div class="list-item js-link" data-route="media.drive" data-params='{"type": "videos"}'>
+                        <i class="material-icons">folder</i>
+                        <div class="info">
+                            <div class="label">Videos</div>
+                            <span>{{stats.video_items}} items</span>
+                        </div>
+                        
+                    </div>
+                    <div class="list-item js-link" data-route="media.drive" data-params='{"type": "images"}'>
+                        <i class="material-icons">folder</i>
+                        <div class="info">
+                            <div class="label">Images</div>
+                            <span>{{stats.image_items}} items</span>
+                        </div>
+                        
+                    </div>
+                    <div class="list-item js-link" data-route="media.drive" data-params='{"type": "other"}'>
+                        <i class="material-icons">folder</i>
+                        <div class="info">
+                            <div class="label">Other</div>
+                            <span>{{stats.other_items}} items</span>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+            <div class="media-upload">
+                {{#with uploadProgress}}
+                <div class="upload-progress">
+                    <div class="progress-name">
+                        <h4>{{uploadProgress.name}}</h4>
+                    </div>
+                    <div class="progress-precent">
+                        <h5>{{uploadProgress.percent}}%</h5>
+                    </div>
+                    {{> progress_input progress=uploadProgress.percent}}
+                </div>
+                {{else}}
+                <div class="upload-icon">
+                    <i class="material-icons">
+                        cloud_upload
+                    </i>
+                </div>
+                <div class="upload-description">
+                    <p>Click the button and select the file you want to upload to this account.</p>
+                </div>
+                <div class="upload-button">
+                    <input type='file' id="upload-input" hidden />
+                    <button class="blue js-upload">Select File</button>
+                </div>
+                {{/with}}
+            </div>
+        </div>
+
+    </div>
+
+</template>

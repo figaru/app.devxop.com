@@ -1,0 +1,37 @@
+<template name="dropdown_input">
+    <div class="dropdown-container">
+        <div class="outer js-dropdown">
+            <div class="left-col">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="sub-label">Templates</div>
+                        <div class="label">{{this.label}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="dropdown-icon">
+                    <i class="material-icons">
+                        keyboard_arrow_down
+                    </i>
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown-popup">
+            <div class="shell">
+                <div class="list">
+                    {{#each item in this.list}}
+                    <div class="item js-item" data-key="{{item.key}}" data-value="{{item.value}}">{{item.label}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="backdrop js-backdrop"></div>
+        </div>
+    </div>
+
+
+
+
+</template>

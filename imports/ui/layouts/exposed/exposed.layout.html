@@ -1,0 +1,51 @@
+<template name="App_exposed">
+    <div id="landing-wrapper">
+        <div class="header">
+            <div class="scope"><h2>Devxop</h2></div>
+            <div class="scope" style="flex-grow: 2;">
+
+            </div>
+            <div class="scope">
+                <button class="btn-text">Sign up</button>
+                <a href="/login" class="button btn-text">Log in</a>
+            </div>
+        </div>
+        <div class="content">
+            {{> Template.dynamic template=main}}
+            <div class="footer">
+                <div class="divider"></div>
+                <div class="row center-xs center-md middle-xs middle-md">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row middle-xs middle-md">
+                            <div class="col-xs-6">
+                                <img width="140px" src="/img/stripe.png">
+                            </div>
+                            <div class="col-xs-6">
+                                <img width="140px" src="/img/payments-stripe.png">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                Privacy
+                            </div>
+                            <div class="col-xs-12">
+                                Terms
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row center-xs">
+                    <div class="col-xs-12 p-5">
+                        <h5 class="mb-3">A web, app and design development company</h5>
+                        <h6>© DEVXOP 2019 All rights reserved</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>

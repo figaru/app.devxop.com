@@ -1,0 +1,112 @@
+<template name="App_user">
+    <!-- POPUPS -->
+    <div class="popup" pd-popup="popupDevice" pd-popup-close="popupDevice">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                {{> Devices_edit isPopup=true}}
+            </div>
+
+            <!-- <h1>Wow! This is Awesome!</h1>
+            <p>Many people are getting problem in using bootstrap modal, so here I'm with custom modal which you can use
+                anywhere.</p>
+            <p><a pd-popup-close="popupDevice" href="#" class="btn btn-danger">Close</a></p>
+            <a class="popup-close" pd-popup-close="popupDevice" href="#"> </a> -->
+        </div>
+    </div>
+
+    <div id="app-wrapper">
+        <div id="app-header">
+            <div class="scope" style="margin-right: 16px;">
+                <div id="toggle-nav-drawer" class="ahs-button selectable"><i class="material-icons">menu</i></div>
+            </div>
+            <!-- We stretch middle div to remaining space Flex-grow: 2 -->
+            <div class="scope" style="flex-grow: 2;">
+                <h4>Devxop</h4>
+                <!-- <div class="ahs-button">
+                    <i class="material-icons">menu</i>
+                </div> -->
+            </div>
+            <div class="scope">
+                <div class="btn-icon hovicon"><i class="material-icons">notifications</i></div>
+                <div class="btn-icon hovicon"><i class="material-icons">account_circle</i></div>
+            </div>
+        </div>
+        <div id="app-content" class="drawer-toggled">
+            <div class="drawer">
+                <div class="account">
+                    <div class="image">
+                        <img
+                            src="https://yt3.ggpht.com/a/AATXAJyq7p1x4cXXb-UeiPAqH-yL84ZW-KxjzTZe3g=s176-c-k-c0x00ffffff-no-rj">
+                        <div class="img-hover">
+                            <i class="material-icons">open_in_new</i>
+                        </div>
+                    </div>
+                    <div class="entity">Account</div>
+                    <div class="name">Daniel Abrantes</div>
+                </div>
+                <div class="item
+                 hoverable js-link" data-route="dashboard">
+                    <i class="material-icons">dashboard</i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="item hoverable js-link" data-route="devices">
+                    <i class="material-icons">devices</i>
+                    <span>Devices</span>
+                </div>
+                <div class="item hoverable js-link" data-route="media">
+                    <i class="material-icons">movie</i>
+                    <span>Media</span>
+                </div>
+                <div class="item hoverable">
+                    <i class="material-icons">assessment</i>
+                    <span>Analytics</span>
+                </div>
+                <div class="footer-split"></div>
+                <div class="item hoverable">
+                    <i class="material-icons">settings</i>
+                    <span>Settings</span>
+                </div>
+                <!-- <div class="divider"></div>
+                <div class="acd-section">
+                    <p>About Press Copyright Contact usCreators Advertise Developers</p>
+                    <p>Terms Privacy Policy and Safety Test new features</p>
+                    <p>© 2020 Devxop</p>
+                </div> -->
+            </div>
+            <!-- <div class="ac-nav" >
+                <div class="acn-item hoverable">
+                    <i class="material-icons">home</i>
+                    <span>Home</span>
+                </div>
+                <div class="acn-item hoverable">
+                    <i class="material-icons">home</i>
+                    <span>Subscriptions</span>
+                </div>
+                <div class="acn-item hoverable">
+                    <i class="material-icons">home</i>
+                    <span>Media</span>
+                </div>
+            </div> -->
+            <div class="render">
+                <div class="page-header">
+                    {{#with getRoute}}
+                    <div class="route-name">
+                        <h3>{{#if this.previous}}<a href="{{this.previous.path}}"><i
+                                    class="material-icons">arrow_back</i></a> {{/if}}
+                            {{this.current.name}}</h3>
+
+                    </div>
+                    {{/with}}
+                    <div class="actions">
+                        <!-- <div class="btn-icon hovicon"><i class="material-icons">publish</i></div> -->
+                    </div>
+                </div>
+                <div class="page-content">
+                    {{> Template.dynamic template=main}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>

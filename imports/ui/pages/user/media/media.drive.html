@@ -1,0 +1,94 @@
+<template name="Media_drive">
+    {{> Media_file doc=editingFile}}
+    <div class="drive-container">
+        <div class="file-listing">
+            {{#each docFile in listFiles}}
+            <div class="file-item" pd-popup-open="popupFile" data-file="{{docFile._id}}">
+                <div class="file-thumb">
+                    <!-- <i class="material-icons">folder</i> -->
+                    <!-- <img src="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/main.jpeg"> -->
+                    {{>img file=docFile}}
+                </div>
+                <div class="file-info">
+                    <div class="file-name">{{docFile.file.name}}</div>
+                    <!-- <div class="file-size">{{formatBytes docFile.file.size}}</div> -->
+                </div>
+            </div>
+            {{else}}
+            no files available
+            {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="Media_file">
+    <div class="popup" pd-popup="popupFile" pd-popup-close="popupFile">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>{{this.doc.title}}</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupFile"> clear</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="popup-content">
+                    <div class="full-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <h4>Details</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                
+                                {{> text_input eventId="fileEdit" maxLength=100 key="title" placeholder="Add a name that describes the file" value=this.doc.title
+                                label="Name"}}
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                {{>text_input eventId="fileEdit" style="min-height: 100px" maxLength=1000 key="description" placeholder="Describe what this image is..." value=this.doc.description
+                                label="Description"}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-col">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                {{>img file=this.doc classStyle="img-full" fullscreen=true}}
+                            </div>
+                            <div class="col-xs-12 pt-3">
+                                <h6>Date Created</h6>
+                                <div class="sub-label">{{parseDate this.doc.createdAt}}</div>
+                            </div>
+                            <div class="col-xs-12">
+                                <h6>Size</h6>
+                                <div class="sub-label">{{formatBytes this.doc.file.size}}</div>
+                            </div>
+                            <div class="col-xs-12">
+                                <h6>Filename</h6>
+                                <div class="sub-label">{{this.doc.file.name}}</div>
+                            </div>
+                            <div class="col-xs-12">
+                                <button id="{{this.doc._id}}" class="js-delete">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup-footer">
+                    footer
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>

@@ -1,0 +1,22 @@
+<template name="img">
+    <!-- PASS FILE PARAM eg. 
+        {{#each image in files}}
+            {{> img file=image }}
+        {{/each}}
+    -->
+    {{docChanged this.file}}
+    <div class="thumbnail-wrapper">
+        {{#if isOtherFile}}
+        <div class="thumbnail">
+            <i class="material-icons">folder</i>
+        </div>
+        {{else}}
+        <img class="thumbnail {{classStyle}}" id="thumbnail-{{file._id}}" src="{{src}}">
+        {{/if}}
+        {{#if this.fullscreen}}
+        <div class="thumbnail-hover js-fullscreen" data-link="">
+            <i class="material-icons">pageview</i>
+        </div>
+        {{/if}}
+    </div>
+</template>

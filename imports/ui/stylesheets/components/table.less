@@ -1,0 +1,220 @@
+/* Variables
+================================== */
+/* Tables
+================================== */
+.Rtable {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 0em 0;
+    padding: 0;
+
+    /* -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1); */
+
+    background-color: var(--color-light);
+    border: var(--border-sm);
+    border-bottom: 0;
+
+    border-radius: var(--border-radius-sm);
+
+}
+
+.Rtable-cell {
+    box-sizing: border-box;
+    flex-grow: 1;
+    width: 100%;
+    overflow: hidden;
+    list-style: none;
+
+    /* background-color: var(--color-light); */
+    /* border-radius: var(--border-radius-sm); */
+
+    padding: 12px;
+    /* border-bottom: solid 1px #ccc;
+    background-color: #fff; */
+    /* font-size: 1em; */
+    /* border-bottom: 2px solid #ccc; */
+}
+
+.Rtable-cell--image {
+    padding: 0.6em 2em;
+}
+
+.Rtable-cell>h1,
+.Rtable-cell>h2,
+.Rtable-cell>h3,
+.Rtable-cell>h4,
+.Rtable-cell>h5,
+.Rtable-cell>h6 {
+    margin: 0;
+}
+
+/* Table column sizing
+  ================================== */
+.Rtable--2cols>.Rtable-cell {
+    width: 50%;
+}
+
+.Rtable--2cols.cell-head>.Rtable-cell {
+    width: calc(calc(100% - 33%) / 1);
+}
+
+.Rtable--3cols>.Rtable-cell {
+    width: 33.33%;
+}
+
+.Rtable--3cols.cell-head>.Rtable-cell {
+    width: calc(calc(100% - 33%) / 2);
+}
+
+.Rtable--4cols>.Rtable-cell {
+    width: 25%;
+}
+
+.Rtable--4cols.cell-head>.Rtable-cell {
+    width: calc(calc(100% - 33%) / 3);
+}
+
+.Rtable--5cols>.Rtable-cell {
+    width: 20%;
+}
+
+.Rtable--5cols.cell-head>.Rtable-cell {
+    width: calc(calc(100% - 33%) / 4);
+}
+
+.Rtable--6cols>.Rtable-cell {
+    width: 16.6%;
+}
+
+.Rtable--6cols.cell-head>.Rtable-cell {
+    width: calc(calc(100% - 33%) / 5);
+}
+
+.Rtable-cell.cell-header {
+    font-size: var(--font-h7);
+    /* background-color: var(--color-light); */
+    color: var(--color-dark-lighter);
+    font-weight: 500;
+
+    height: 47px;
+
+    border-bottom: var(--border-sm);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Rtable-cell.cell-data {
+    font-size: var(--font-h7);
+    background-color: var(--color-light);
+    color: var(--color-dark);
+
+    min-height: 47px;
+
+    border-bottom: var(--border-sm);
+
+    display: flex;
+    /* align-items: center; */
+
+    .content {
+        padding: 12px;
+        flex-grow: 2;
+        font-size: var(--font-h5);
+        overflow: hidden;
+
+        .placeholder {
+            padding-top: 6px;
+            color: var(--color-dark-lighter);
+            font-size: var(--font-h6);
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.Rtable-cell--head {
+    width: 33% !important;
+    border-right: var(--border-sm);
+}
+
+.Rtable-cell--foot {
+    /* background-color: #b8c0c8; */
+    border-color: #a9b3bc;
+    border-bottom: 2px solid #ccc;
+}
+
+/* Alignment
+  ==================================== */
+.Rtable-cell.--alignTop,
+.Rtable-cell.--alignMiddle,
+.Rtable-cell.--alignBottom {
+    display: flex;
+}
+
+.Rtable-cell.--alignTop {
+    align-items: flex-start;
+}
+
+.Rtable-cell.--alignMiddle {
+    align-items: center;
+}
+
+.Rtable-cell.--alignBottom {
+    align-items: flex-end;
+}
+
+.Rtable-cell.--alignLeft {
+    text-align: left;
+}
+
+.Rtable-cell.--alignCenter {
+    text-align: center;
+}
+
+.Rtable-cell.--alignRight {
+    text-align: right;
+}
+
+/* Responsive
+  ==================================== */
+@media all and (max-width: 676px) {
+    .Rtable--collapse {
+        display: block;
+    }
+
+    .Rtable--collapse>.Rtable-cell {
+        width: 100% !important;
+        border-bottom: 0px solid #5a6673;
+    }
+
+    .Rtable--collapse>.Rtable-cell--foot {
+        border-top: 1px solid #b8c0c8;
+        padding: 1em;
+        border-bottom: 0px solid #5a6673;
+
+    }
+}
+
+.no-flexbox .Rtable {
+    display: block;
+}
+
+.no-flexbox .Rtable>.Rtable-cell {
+    width: 100%;
+}
+
+.no-flexbox .Rtable>.Rtable-cell--foot {
+
+    margin-bottom: 1em;
+}

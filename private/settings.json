@@ -1,0 +1,22 @@
+{
+    "Key": "figaru",
+    "stripe": {
+        "live": {
+            "pk": "pk_live_eAD7xxLseev6EBCLoXyADzAw008lxrJfT4",
+            "sk": "sk_live_ONRikHrzuHCQUxL3mdww6WvU00j1GnImtE"
+        },
+        "test": {
+            "pk": "pk_test_HRvNyr6bS6a9upJyTleR63VN",
+            "sk": "sk_test_MJJzCdZehL0wQmlvqLZrsdCx"
+        }
+    },
+    "public": {
+        "stripe": {
+            "live_pk": "pk_live_eAD7xxLseev6EBCLoXyADzAw008lxrJfT4",
+            "test_pk": "pk_test_HRvNyr6bS6a9upJyTleR63VN"
+        },
+        "api": {
+            "storage": "http://localhost"
+        }
+    }
+}
