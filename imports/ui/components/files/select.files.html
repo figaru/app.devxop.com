@@ -1,6 +1,6 @@
 <template name="select_files">
-    
-    <a class="btn btn-success" pd-popup-open="popupFileSelect" href="#">Open Modal</a>
+
+    <!-- <a class="btn btn-success" pd-popup-open="popupFileSelect" href="#">Open Modal</a> -->
     <div class="popup" pd-popup="popupFileSelect" pd-popup-close="popupFileSelect">
         <div class="popup-inner">
             <div class="popup-wrapper">
@@ -20,9 +20,27 @@
 
                 <div class="popup-content">
                     <div class="full-col">
-                        {{#each file in files}}
+                        <div class="drive-container">
+                            <div class="file-listing">
+                                {{#let key=this.key}}
+                                {{#each docFile in filesList}}
+                                <div class="file-item js-file" data-key="{{key}}" data-file="{{docFile._id}}">
+                                    <div class="file-thumb">
+                                        <!-- <i class="material-icons">folder</i> -->
+                                        <!-- <img src="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/main.jpeg"> -->
+                                        {{>img file=docFile}}
+                                    </div>
+                                    <div class="file-info">
+                                        <div class="file-name">{{docFile.file.name}}</div>
+                                        <!-- <div class="file-size">{{formatBytes docFile.file.size}}</div> -->
+                                    </div>
+                                </div>
+                                {{/each}}
+                                {{/let}}
+                            </div>
+                        </div>
 
-                        {{/each}}
+
                     </div>
                 </div>
 

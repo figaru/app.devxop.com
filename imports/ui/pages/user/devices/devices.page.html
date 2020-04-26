@@ -1,4 +1,5 @@
 <template name="Devices">
+    {{> Devices_edit doc=editingFile}}
     <div id="devices-container">
 
         <div class="devices-wrapper">
@@ -21,19 +22,19 @@
                 </div>
 
 
+                {{#each device in devicesList}}
                 <div style="order:2" class="Rtable-cell cell-data Rtable-cell--head">
                     <div class="img">
-                        {{> img url="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/thumb.jpeg"}}
+                        {{> img url="http://localhost/files/bxxpwy2cwGNumjWTK/DtpRiJPSEQKbdXBmT/main.jpeg"}}
                     </div>
 
                     <div class="content">
-                        Device name here
-
-                        <div class="placeholder">Description is here for the device</div>
+                        <span>{{device.name}}</span>
+                        <div class="placeholder">{{device.description}}</div>
                     </div>
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    Status
+                    <!-- {{deviceStatus device}} -->
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
                     Runtime
@@ -42,9 +43,15 @@
                     Display
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    <a class="btn btn-success" pd-popup-open="popupDevice" href="#">Open Modal</a>
+                    <a class="button" pd-popup-open="popupDevice" data-device="{{device._id}}" href="#">Open Modal</a>
 
                 </div>
+                {{else}}
+                <div style="order:2" class="Rtable-cell cell-data">
+                    <p>You have no devices available.</p>
+                </div>
+                {{/each}}
+
 
             </div>
         </div>
@@ -54,12 +61,14 @@
 </template>
 
 <template name="Devices_edit">
+    {{renderEvent doc}}
+    {{#if deviceDoc}}
     <div class="popup" pd-popup="popupDevice" pd-popup-close="popupDevice">
         <div class="popup-inner">
             <div class="popup-wrapper">
                 <div class="popup-header">
                     <div class="title">
-                        <h5>Device name goes here</h5>
+                        <h5>{{deviceDoc.name}}</h5>
                     </div>
                     <div class="actions">
                         <div class="action-item">
@@ -75,44 +84,135 @@
                     <div class="left-col">
                         <div class="row">
                             <div class="col-xs-12 pb-3">
-                                <h4>Details</h4>
+                                <h5>Details</h5>
                             </div>
                             <div class="col-xs-12 pb-3">
-                                {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Add a name that describes the device" value=test label="Name"}}
+                                {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Add a name that describes the device" value=deviceDoc.name label="Name"}}
                             </div>
                             <div class="col-xs-12 pb-3">
-                                {{> text_input eventId="deviceEdit" style="min-height: 100px" maxLength=1000 key="description" placeholder="Describe what this device does" value=test label="Description"}}
+                                {{> text_input eventId="deviceEdit" style="min-height: 30px" maxLength=500 key="description" placeholder="Describe what this device does" value=deviceDoc.description label="Description"}}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 pb-1">
-                                <h6>Template</h6>
+                                <h5>Display View</h5>
                                 <div class="sub-label">Select the display template you want to edit for the current
                                     device.</div>
                             </div>
-                            <div class="col-xs-12 pb-3">
-                                <div style="max-width: 280px;">
-                                    {{> dropdown_input eventId="deviceEdit" list=test label="Video"}}
-                                </div>
-
+                            <div class="col-xs-6 pb-3">
+                                {{> dropdown_input eventId="deviceEdit" list=dropdownViewList label="Views" selected=deviceDoc.published_view}}
                             </div>
                         </div>
-                        {{#if canSelectFile "video"}}
+                        {{#if displayViewEdit "video"}}
+                        <!-- <a class="btn btn-success" pd-popup-open="popupFileSelect" href="#">Open Modal</a> -->
+                        {{> select_files eventId="deviceEdit" key="file" fileType="video"}}
                         <div class="row">
-                            <div class="col-xs-12 pb-1">
-                                {{> select_files eventId="deviceEdit" fileTypes="video"}}
+                            <div class="col-xs-12">
+                                <div class="display-view-edit">
+                                    <div class="file-listing">
+                                        <div class="file-item">
+                                            <div class="add-file" pd-popup-open="popupFileSelect">
+                                                <i class="material-icons">add_photo_alternate</i>
+                                                <span>Add a file...</span>
+                                            </div>
+                                        </div>
+                                        {{#each fileId in deviceDoc.views.video.files}}
+                                        <div class="file-item">
+                                            {{> item_files file=fileId info=true}}
+                                            <div class="remove-file js-remove-file" data-file="{{fileId}}"
+                                                data-index="{{@index}}">
+                                                <i class="material-icons">delete</i>
+                                            </div>
+
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         {{/if}}
+
+                        {{#if displayViewEdit "image"}}
+                        <!-- <a class="btn btn-success" pd-popup-open="popupFileSelect" href="#">Open Modal</a> -->
+                        {{> select_files eventId="deviceEdit" key="file" fileType="image"}}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="display-view-edit">
+                                    <div class="file-listing">
+                                        <div class="file-item">
+                                            <div class="add-file" pd-popup-open="popupFileSelect">
+                                                <i class="material-icons">add_photo_alternate</i>
+                                                <span>Add a file...</span>
+                                            </div>
+                                        </div>
+                                        {{#each fileId in deviceDoc.views.image.files}}
+                                        <div class="file-item">
+                                            {{> item_files file=fileId info=true}}
+                                            <div class="remove-file js-remove-file" data-file="{{fileId}}"
+                                                data-index="{{@index}}">
+                                                <i class="material-icons">delete</i>
+                                            </div>
+
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        {{/if}}
+
+                        <div class="row">
+                            <div class="col-xs-12 pb-4 pt-4">
+                                {{#if displayViewExists}}
+                                <h6>Status</h6>
+                                {{#if displayViewPublished}}
+                                <div class="sub-label">This display view is currently published to the device.</div>
+                                {{else}}
+                                <div class="sub-label">To make this display view visible in your device, you first need
+                                    to publish it.</div>
+                                <button class="red js-publish-displayView">Publish now!</button>
+
+                                {{/if}}
+                                {{/if}}
+                            </div>
+                        </div>
+
                     </div>
                     <div class="right-col">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div style="width: 100%; height: 180px;">
+                                    {{> item_files files=getViewFiles}}
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-xs-12 pt-3">
+                                <div class="label">Status</div>
+                                <div class="sub-label">{{deviceDoc.update_stamp}}</div>
+                            </div>
+                            <div class="col-xs-12 pt-3">
+                                <div class="label">Runtime</div>
+                                <div class="sub-label">{{deviceDoc.published_view}}</div>
+                            </div>
+                            <div class="col-xs-12 pt-3">
+                                <div class="label">Published View</div>
+                                <div class="sub-label">{{deviceDoc.published_view}}</div>
+                            </div>
+                            <div class="col-xs-12 pt-3">
+                                <div class="label">Action</div>
+                                <div class="sub-label"><button>Force Update</button></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="popup-footer">
-                    footer
-                </div>
+                <!-- <div class="popup-footer">
+                    {{this.doc.name}}
+                </div> -->
             </div>
 
             <!-- <h1>Wow! This is Awesome!</h1>
@@ -122,4 +222,5 @@
             <a class="popup-close" pd-popup-close="popupDevice" href="#"> </a> -->
         </div>
     </div>
+    {{/if}}
 </template>

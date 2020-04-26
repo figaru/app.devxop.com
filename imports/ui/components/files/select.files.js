@@ -1,17 +1,20 @@
 import "./select.files.html";
 
 Template.select_files.helpers({
-    'files': function(){
+    'filesList': function(){
         let tmpl = Template.instance();
-        let fileTypes = tmpl.data.fileTypes;
+        let fileType = tmpl.data.fileType;
 
-        return [];
+        return Files.find({"file.mimetype": { $regex: ".*"+ fileType +".*" }});
     }
 })
 
 Template.select_files.events({
     'click .js-file': function(e, tmpl){
-        let elem = $(e.target);
+        let elem = $(e.currentTarget);
+        elem.data("key", tmpl.data.key);
         $(document).trigger(tmpl.data.eventId, [elem]);
+
+        tmpl.$(".popup-close").click();
     }
 })

@@ -4,8 +4,8 @@
             <div class="left-col">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="sub-label">Templates</div>
-                        <div class="label">{{this.label}}</div>
+                        <div class="sub-label">{{this.label}}</div>
+                        <div class="label">{{dropdownSelection}}</div>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <div class="shell">
                 <div class="list">
                     {{#each item in this.list}}
-                    <div class="item js-item" data-key="{{item.key}}" data-value="{{item.value}}">{{item.label}}</div>
+                    <div class="item js-item" data-key="{{item.key}}" data-value="{{item.value}}" data-label="{{item.label}}">{{item.label}}</div>
                     {{/each}}
                 </div>
             </div>

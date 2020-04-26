@@ -57,7 +57,7 @@
 }
 
 .Rtable--2cols.cell-head>.Rtable-cell {
-    width: calc(calc(100% - 33%) / 1);
+    width: calc(calc(100% - 50%) / 1);
 }
 
 .Rtable--3cols>.Rtable-cell {
@@ -65,7 +65,7 @@
 }
 
 .Rtable--3cols.cell-head>.Rtable-cell {
-    width: calc(calc(100% - 33%) / 2);
+    width: calc(calc(100% - 50%) / 2);
 }
 
 .Rtable--4cols>.Rtable-cell {
@@ -73,7 +73,7 @@
 }
 
 .Rtable--4cols.cell-head>.Rtable-cell {
-    width: calc(calc(100% - 33%) / 3);
+    width: calc(calc(100% - 50%) / 3);
 }
 
 .Rtable--5cols>.Rtable-cell {
@@ -81,7 +81,7 @@
 }
 
 .Rtable--5cols.cell-head>.Rtable-cell {
-    width: calc(calc(100% - 33%) / 4);
+    width: calc(calc(100% - 50%) / 4);
 }
 
 .Rtable--6cols>.Rtable-cell {
@@ -89,7 +89,7 @@
 }
 
 .Rtable--6cols.cell-head>.Rtable-cell {
-    width: calc(calc(100% - 33%) / 5);
+    width: calc(calc(100% - 50%) / 5);
 }
 
 .Rtable-cell.cell-header {
@@ -125,14 +125,25 @@
     display: flex;
     /* align-items: center; */
 
-    .content {
+    >.img {
+        width: 144px;
+    }
+
+    >.content {
         padding: 12px;
         flex-grow: 2;
         font-size: var(--font-h5);
         overflow: hidden;
 
-        .placeholder {
-            padding-top: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        >span{
+            
+        }
+
+        >.placeholder {
             color: var(--color-dark-lighter);
             font-size: var(--font-h6);
 
@@ -144,7 +155,7 @@
 }
 
 .Rtable-cell--head {
-    width: 33% !important;
+    width: 50% !important;
     border-right: var(--border-sm);
 }
 

@@ -34,15 +34,19 @@ import '../../ui/functions/utils/index.utils.js';
 import '../../ui/helpers/router.helper.js';
 
 //COMPONENTS
-import '../../ui/components/img/img.js';
-import '../../ui/components/files/select.files.js';
-import '../../ui/components/form/text.input.js';
-import '../../ui/components/form/dropdown.input.js';
-import '../../ui/components/form/progress.input.js';
+import '../../ui/components/index.components.js';
 
 
 import ElementQueries from 'css-element-queries/src/ElementQueries';
 import { ReactiveVar } from 'meteor/reactive-var';
+
+
+
+Match._id = Match.Where(function (id) {
+  check(id, String);
+  //TEST: Match.test("bxxpwy2cwGNum", Match._id)
+  return /[a-zA-Z0-9]{17,17}/.test(id);
+});
 
 $(() => {
 

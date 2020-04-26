@@ -1,0 +1,67 @@
+<template name="item_files">
+    <!-- PASS FILE PARAM eg. 
+        {{#each image in files}}
+            {{> img file=image }}
+        {{/each}}
+    -->
+    {{docChanged this.file}}
+    <div class="thumbnail-wrapper">
+
+        <!-- IF CONTAINS MULTIPLE FILES -->
+        {{#if files}}
+        <div class="slide-preview">
+            {{#each url in files}}
+            <img class="slide-item" src="{{url}}">
+            {{/each}}
+        </div>
+        {{/if}}
+
+
+        <!-- IF ONLY CONTAINS SINGLE FILE -->
+        {{#if file}}
+            {{#if isOtherFile}}
+            <div class="thumbnail">
+                <i class="material-icons">folder</i>
+            </div>
+            {{else}}
+            <div class="file-preview">
+                <img class="{{classStyle}}" id="thumbnail-{{file._id}}" src="{{src}}">
+            </div>
+            {{/if}}
+            {{#if this.fullscreen}}
+            <div class="thumbnail-hover js-fullscreen" data-link="">
+                <i class="material-icons">pageview</i>
+            </div>
+            {{/if}}
+            {{#if this.info}}
+            <div class="file-info">
+                {{#if file.tilte}}
+                <span>{{file.title}}</span>
+                {{else}}
+                <span>{{file.file.name}}</span>
+                {{/if}}
+            </div>
+            {{/if}}
+        {{/if}}
+        <!-- {{#if isOtherFile}}
+        <div class="thumbnail">
+            <i class="material-icons">folder</i>
+        </div>
+        {{else}}
+        <div class="thumbnail">
+            <img class="{{classStyle}}" id="thumbnail-{{file._id}}" src="{{src}}">
+        </div>
+        
+        {{/if}}
+        {{#if this.fullscreen}}
+        <div class="thumbnail-hover js-fullscreen" data-link="">
+            <i class="material-icons">pageview</i>
+        </div>
+        {{/if}}
+        {{#if this.info}}
+        <div class="info">
+            <span>{{file.title}}</span>
+        </div>
+        {{/if}} -->
+    </div>
+</template>

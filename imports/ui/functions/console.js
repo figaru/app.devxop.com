@@ -1,4 +1,4 @@
-var console=(function(oldCons){
+/* var console=(function(oldCons){
     return {
         log: function(text){
             if(Meteor.isDevelopment){
@@ -25,4 +25,4 @@ var console=(function(oldCons){
 }(window.console));
 
 //Then redefine the old console
-window.console = console;
+window.console = console; */

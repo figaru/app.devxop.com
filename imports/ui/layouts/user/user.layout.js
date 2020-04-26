@@ -28,8 +28,12 @@ Template.App_user.helpers({
 Template.App_user.events({
     //POPUP EVENTS
     'click [pd-popup-open]': (e, tmpl) => {
-        $("#app-wrapper").addClass("popup-toggled");
+        let app = $("#app-wrapper");
+        app.addClass("popup-toggled");
+
         var targeted_popup_class = $(e.currentTarget).attr('pd-popup-open');
+
+
         $('[pd-popup="' + targeted_popup_class + '"]').fadeIn(100);
 
         e.preventDefault();
@@ -40,8 +44,21 @@ Template.App_user.events({
         let popup = $('[pd-popup="' + targeted_popup_class + '"]');
 
         if (popup[0]) {
-            $('[pd-popup="' + targeted_popup_class + '"]').fadeOut(200);
-            $("#app-wrapper").removeClass("popup-toggled");
+            $('[pd-popup="' + targeted_popup_class + '"]').fadeOut(0);
+
+            let hasParent = false;
+            $(".popup").each(function(){
+                if($(this).css("display") == "block"){
+                    hasParent = true;
+                }
+                
+            });
+
+            if(!hasParent){
+                //console.log(hasParent);
+                $("#app-wrapper").removeClass("popup-toggled"); 
+            }
+            
         }
 
 

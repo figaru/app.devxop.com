@@ -1,0 +1,19 @@
+<template name="list_files">
+    <div class="file-listing">
+        {{#each docFile in this.filesList}}
+        <div class="file-item" pd-popup-open="popupFile" data-file="{{docFile._id}}">
+            <div class="file-thumb">
+                <!-- <i class="material-icons">folder</i> -->
+                <!-- <img src="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/main.jpeg"> -->
+                {{>img file=docFile}}
+            </div>
+            <div class="file-info">
+                <div class="file-name">{{docFile.file.name}}</div>
+                <!-- <div class="file-size">{{formatBytes docFile.file.size}}</div> -->
+            </div>
+        </div>
+        {{else}}
+        no files available
+        {{/each}}
+    </div>
+</template>

@@ -299,13 +299,17 @@ button,
   display: inline-block;
   border: var(--border-sm);
   border-radius: var(--border-radius-sm);
-  padding: 10px 24px;
+  padding: 10px 16px;
   margin: 0;
   text-decoration: none;
   background: var(--color-dark);
   color: var(--color-light);
 
-  /* font-weight: 400; */
+  font: 400 var(--font-h6);
+  font-weight: 300;
+  font-size: var(--font-h6);
+  line-height: var(--font-h6);
+  
 
   cursor: pointer;
   text-align: center;
@@ -318,7 +322,15 @@ button:hover{
   filter: brightness(90%);
 }
 
+button.align-center{
+  margin: auto;
+}
+
 button.blue, .button.blue{
-  background-color: var(--primary);
+  background-color: var(--color-blue);
+  color: var(--color-light);
+}
+button.red, .button.red{
+  background-color: var(--color-red);
   color: var(--color-light);
 }
