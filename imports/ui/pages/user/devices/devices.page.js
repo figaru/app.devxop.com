@@ -28,7 +28,15 @@ Template.Devices.helpers({
     'editingFile': function () {
         let tmpl = Template.instance();
         return Devices.findOne(tmpl.editingFile.get());
-    }
+    },
+    "getViewFiles": function(device){
+        //let device = Template.instance().data.device;
+        if(device){
+            return device.views[device.published_view].files;
+        }
+
+        return [];
+    },
 });
 
 

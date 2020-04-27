@@ -3,7 +3,7 @@ import './dropdown.input.html';
 
 Template.dropdown_input.onCreated(function () {
     this.dropdownSelection = new ReactiveVar(this.data.selected);
-    console.log(this);
+    /* console.log(this); */
 });
 
 Template.dropdown_input.onRendered(function () {

@@ -1,4 +1,3 @@
-
 Template.registerHelper("formatBytes", function (bytes) {return formatBytes(bytes);});
 formatBytes = function(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';

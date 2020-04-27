@@ -23,15 +23,9 @@ import './routes/media.user.js';
 
 import "../../ui/pages/index";
 
-//FUNCTIONS
-import '../../ui/functions/console.js';
-import '../../ui/functions/listeners.js';
 
-//UTILS
-import '../../ui/functions/utils/index.utils.js';
-
-//HELPERS
-import '../../ui/helpers/router.helper.js';
+//UTILS -> UTILS ALSO INCLUDE HELPERS
+import '../../ui/utils/index.js';
 
 //COMPONENTS
 import '../../ui/components/index.components.js';
@@ -41,12 +35,6 @@ import ElementQueries from 'css-element-queries/src/ElementQueries';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 
-
-Match._id = Match.Where(function (id) {
-  check(id, String);
-  //TEST: Match.test("bxxpwy2cwGNum", Match._id)
-  return /[a-zA-Z0-9]{17,17}/.test(id);
-});
 
 $(() => {
 

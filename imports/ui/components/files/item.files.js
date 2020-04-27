@@ -15,7 +15,7 @@ function showSlides() {
     /* console.log(slides); */
     if (slides[0] && slides.length > 1) {
         slides.each(function () {
-            $(this).fadeOut(200);
+            $(this).fadeOut(00);
         });
 
         slideIndex++;
@@ -23,14 +23,14 @@ function showSlides() {
             slideIndex = 1
         }
         //slides[slideIndex - 1].style.display = "block";
-        $(slides[slideIndex - 1]).fadeIn(400);
+        $(slides[slideIndex - 1]).fadeIn(200);
 
     }else{
         slideIndex = 0;
         $(slides[slideIndex]).fadeIn(0);
     }
 
-    timeOut = setTimeout(showSlides, 4000); // Change image every 2 seconds
+    timeOut = setTimeout(showSlides, 3000); // Change image every 2 seconds
 
 
 }
@@ -49,26 +49,17 @@ Template.item_files.onCreated(function () {
 Template.item_files.helpers({
     'docChanged': function (doc) {
         let tmpl = Template.instance();
-        console.log("doc changed!");
+        //console.log("doc changed!");
 
         let file = tmpl.data.file;
         let files = tmpl.data.files;
 
         if (!file) {
             if (Array.isArray(files) && files.length > 0) {
-                /* if (files.length == 1 && Match.test(files[0], Match._id)) {
-                    tmpl.files.set();
-                    tmpl.file.set(Files.findOne(files[0]));
-                    //clear
-                } else {
-                    //array exists and not empty
-                    tmpl.files.set(files);
-                    //console.log(files);
-                } */
                 tmpl.files.set(files);
             }
         } else {
-            if (Match.test(doc, Match._id)) {
+            if (isMeteorId(doc)) {
                 //doc is id -> find correct file
                 tmpl.file.set(Files.findOne(doc));
             } else {
@@ -144,8 +135,8 @@ Template.item_files.onRendered(function () {
 
         let file = self.file.get();
         let files = self.files.get();
-        console.log(file);
-        console.log(files);
+        /* console.log(file);
+        console.log(files); */
 
 
 
@@ -171,7 +162,7 @@ Template.item_files.onRendered(function () {
             //use this object reference so that jquery does not find multiple elemnts -> prevents conflict
             let elm = self.$("#thumbnail-" + file._id);
 
-            console.log(elm);
+            /* console.log(elm); */
             elm.on("error", function () {
                 error = true;
                 if (loadAttempts <= 3) {
@@ -189,7 +180,7 @@ Template.item_files.onRendered(function () {
 
             elm.on("load", function () {
                 //here preload has been succesfully shown and so we now move on to higher quality thumb
-                console.log("image loaded");
+                /* console.log("image loaded"); */
                 if (file.is_video) {
                     //set gif
                     //elm.attr("src", fileUrls.preview);

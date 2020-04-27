@@ -1,3 +1,14 @@
+Template.registerHelper('getViewFiles', (device) => {
+    if(device){
+        return device.views[device.published_view].files;
+    }
+
+    return [];
+    
+});
+
+Template.registerHelper('fileUrl', (id, key) => { return fileUrl(id, key)});
+
 fileUrl = function(id, key){
     let file = Files.findOne({"_id": id});
 

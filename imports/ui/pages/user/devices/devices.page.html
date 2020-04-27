@@ -18,15 +18,18 @@
                     Runtime
                 </div>
                 <div style="order:1" class="Rtable-cell cell-header">
-                    Update
+
                 </div>
 
 
                 {{#each device in devicesList}}
                 <div style="order:2" class="Rtable-cell cell-data Rtable-cell--head">
                     <div class="img">
-                        {{> img url="http://localhost/files/bxxpwy2cwGNumjWTK/DtpRiJPSEQKbdXBmT/main.jpeg"}}
+                        {{#with getViewFiles device}}
+                        {{> item_files files=this}}
+                        {{/with}}
                     </div>
+
 
                     <div class="content">
                         <span>{{device.name}}</span>
@@ -34,17 +37,21 @@
                     </div>
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    <!-- {{deviceStatus device}} -->
+                    {{deviceStatus device}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    Runtime
+                    {{device.published_view}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    Display
+                    {{runtimeFromDate device.startup_stamp}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    <a class="button" pd-popup-open="popupDevice" data-device="{{device._id}}" href="#">Open Modal</a>
-
+                    <!-- <a class="button" pd-popup-open="popupDevice" data-device="{{device._id}}" href="#">Open Modal</a> -->
+                    <div class="device-actions">
+                        <div class="action-button" pd-popup-open="popupDevice" data-device="{{device._id}}">
+                            <i class="material-icons">edit</i>
+                        </div>
+                    </div>
                 </div>
                 {{else}}
                 <div style="order:2" class="Rtable-cell cell-data">
