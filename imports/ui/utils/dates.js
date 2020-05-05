@@ -7,8 +7,8 @@ parseDate = function (d) {
 
 Template.registerHelper("runtimeFromDate", function (d) { return runtimeFromDate(d); });
 runtimeFromDate = function (oldDate) {
-    date_future = new Date(oldDate);
-    date_now = new Date();
+    date_future = new Date();
+    date_now = new Date(oldDate);
 
     seconds = Math.floor((date_future - (date_now)) / 1000);
     minutes = Math.floor(seconds / 60);
@@ -20,6 +20,23 @@ runtimeFromDate = function (oldDate) {
     seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
 
     //$("#time").text("Time until new year:\nDays: " + days + " Hours: " + hours + " Minutes: " + minutes + " Seconds: " + seconds);
+
+    if(days > 0){
+        if(hours == 1){
+            return hours + " day ago"
+        }
+        return days + " days and " + hours + " hours ago"
+    }else if(hours > 0 && hours <= 23){
+        if(hours == 1){
+            return hours + " hour ago"
+        }
+        return hours + " hours and " + minutes + " minutes ago";
+    }else if(minutes > 0 && minutes <=59){
+        if(minutes == 1){
+            return minutes + " minute ago"
+        }
+        return minutes + " minutes ago"
+    }
 
     return "Time until new year:\nDays: " + days + " Hours: " + hours + " Minutes: " + minutes + " Seconds: " + seconds;
 }

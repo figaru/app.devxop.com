@@ -1,4 +1,4 @@
-Template.registerHelper("deviceStatus", function(device){
+Template.registerHelper("isDeviceOnline", function(device){
     if (device && device["ping_stamp"]) {
         let time1 = device.ping_stamp;
         let time2 = new Date().getTime();
@@ -6,19 +6,13 @@ Template.registerHelper("deviceStatus", function(device){
 
         let diff = getDiffSeconds(time2, time1);
 
-        if (diff > 130) { //ping stamp update every 30 seconds
-            res = "offline";
-
-            return res;
+        if (diff > 60) { //ping stamp update every 30 seconds
+            return false
         } else {
-            res = "online";
-
-            return res;
+            return true
         }
 
     } else {
-        res = "unknown";
-
-        return res;
+        return false;
     }
 });

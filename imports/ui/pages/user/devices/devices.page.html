@@ -1,5 +1,5 @@
 <template name="Devices">
-    {{> Devices_edit doc=editingFile}}
+    {{> Devices_edit deviceId=editingFile}}
     <div id="devices-container">
 
         <div class="devices-wrapper">
@@ -27,6 +27,8 @@
                     <div class="img">
                         {{#with getViewFiles device}}
                         {{> item_files files=this}}
+                        {{else}}
+                        {{> item_files}}
                         {{/with}}
                     </div>
 
@@ -37,19 +39,27 @@
                     </div>
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    {{deviceStatus device}}
+                    {{#if isDeviceOnline device}}
+                        Online
+                    {{else}}
+                        Offline
+                    {{/if}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
                     {{device.published_view}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
+                    {{#if isDeviceOnline device}}
                     {{runtimeFromDate device.startup_stamp}}
+                    {{else}}
+                    ---
+                    {{/if}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
                     <!-- <a class="button" pd-popup-open="popupDevice" data-device="{{device._id}}" href="#">Open Modal</a> -->
                     <div class="device-actions">
-                        <div class="action-button" pd-popup-open="popupDevice" data-device="{{device._id}}">
-                            <i class="material-icons">edit</i>
+                        <div class="action-button js-device-edit" pd-popup-open="popupDevice" data-device="{{device._id}}">
+                            <div class="material-icons">edit</div>
                         </div>
                     </div>
                 </div>
@@ -68,14 +78,14 @@
 </template>
 
 <template name="Devices_edit">
-    {{renderEvent doc}}
-    {{#if deviceDoc}}
+    {{renderEvent deviceId}}
+    {{#with deviceDoc}}
     <div class="popup" pd-popup="popupDevice" pd-popup-close="popupDevice">
         <div class="popup-inner">
             <div class="popup-wrapper">
                 <div class="popup-header">
                     <div class="title">
-                        <h5>{{deviceDoc.name}}</h5>
+                        <h5>{{this.name}}</h5>
                     </div>
                     <div class="actions">
                         <div class="action-item">
@@ -94,10 +104,10 @@
                                 <h5>Details</h5>
                             </div>
                             <div class="col-xs-12 pb-3">
-                                {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Add a name that describes the device" value=deviceDoc.name label="Name"}}
+                                {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Add a name that describes the device" value=this.name label="Name"}}
                             </div>
                             <div class="col-xs-12 pb-3">
-                                {{> text_input eventId="deviceEdit" style="min-height: 30px" maxLength=500 key="description" placeholder="Describe what this device does" value=deviceDoc.description label="Description"}}
+                                {{> text_input eventId="deviceEdit" style="min-height: 30px" maxLength=500 key="description" placeholder="Describe what this device does" value=this.description label="Description"}}
                             </div>
                         </div>
                         <div class="row">
@@ -107,7 +117,7 @@
                                     device.</div>
                             </div>
                             <div class="col-xs-6 pb-3">
-                                {{> dropdown_input eventId="deviceEdit" list=dropdownViewList label="Views" selected=deviceDoc.published_view}}
+                                {{> dropdown_input eventId="deviceEdit" list=dropdownViewList label="Views" selected=this.published_view}}
                             </div>
                         </div>
                         {{#if displayViewEdit "video"}}
@@ -123,7 +133,7 @@
                                                 <span>Add a file...</span>
                                             </div>
                                         </div>
-                                        {{#each fileId in deviceDoc.views.video.files}}
+                                        {{#each fileId in this.views.video.files}}
                                         <div class="file-item">
                                             {{> item_files file=fileId info=true}}
                                             <div class="remove-file js-remove-file" data-file="{{fileId}}"
@@ -153,7 +163,7 @@
                                                 <span>Add a file...</span>
                                             </div>
                                         </div>
-                                        {{#each fileId in deviceDoc.views.image.files}}
+                                        {{#each fileId in this.views.image.files}}
                                         <div class="file-item">
                                             {{> item_files file=fileId info=true}}
                                             <div class="remove-file js-remove-file" data-file="{{fileId}}"
@@ -199,15 +209,24 @@
                         <div class="row">
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Status</div>
-                                <div class="sub-label">{{deviceDoc.update_stamp}}</div>
+                                {{#if isDeviceOnline this}}
+                                <div class="sub-label">Online</div>
+                                {{else}}
+                                <div class="sub-label">Offline</div>
+                                {{/if}}
+                                
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Runtime</div>
-                                <div class="sub-label">{{deviceDoc.published_view}}</div>
+                                {{#if isDeviceOnline this}}
+                                <div class="sub-label">{{runtimeFromDate this.startup_stamp}}</div>
+                                {{else}}
+                                <div class="sub-label">---</div>
+                                {{/if}}
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Published View</div>
-                                <div class="sub-label">{{deviceDoc.published_view}}</div>
+                                <div class="sub-label">{{this.published_view}}</div>
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Action</div>
@@ -229,5 +248,5 @@
             <a class="popup-close" pd-popup-close="popupDevice" href="#"> </a> -->
         </div>
     </div>
-    {{/if}}
+    {{/with}}
 </template>

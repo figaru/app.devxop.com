@@ -11,13 +11,9 @@ Template.Devices.onRendered(function () {
 
 
 Template.Devices.events({
-    'click [pd-popup-open]': function (e, tmpl) {
-        let deviceId = $(e.target).data("device");
-        //console.log(deviceId);
-        if (deviceId) {
-            tmpl.editingFile.set(deviceId);
-        }
-
+    'click .js-device-edit': function (e, tmpl) {
+        let deviceId = $(e.currentTarget).data("device");
+        tmpl.editingFile.set(deviceId);
     },
 });
 
@@ -27,11 +23,11 @@ Template.Devices.helpers({
     },
     'editingFile': function () {
         let tmpl = Template.instance();
-        return Devices.findOne(tmpl.editingFile.get());
+        return tmpl.editingFile.get();
     },
-    "getViewFiles": function(device){
+    "getViewFiles": function (device) {
         //let device = Template.instance().data.device;
-        if(device){
+        if (device && device.published_view !== undefined) {
             return device.views[device.published_view].files;
         }
 
@@ -46,13 +42,15 @@ Template.Devices.helpers({
 
 
 Template.Devices_edit.onCreated(function () {
-    this.selectedDisplayView = new ReactiveVar();
+    this.templateStartup = new ReactiveVar(true); // flag certain variable startup once
+    this.selectedDisplayView = new ReactiveVar(null);
     this.counter = new ReactiveVar(0);
 
-    this.device = new ReactiveVar();
+    this.device = new ReactiveVar(null);
 });
 
 Template.Devices_edit.onRendered(function () {
+
     // set up local reactive variables
     let self = this;
 
@@ -63,71 +61,46 @@ Template.Devices_edit.onRendered(function () {
         let target = $(elem);
         let key = target.data("key");
         let val = target.val();
-
+        let data = {};
+        
         if (target.is('div')) {
             //then it does not have value attr use data-value=""
             val = target.data("value");
         }
-
-        let data = {};
-
 
         if (key == "display_view") {
             //set the current display view in edit mode
             self.selectedDisplayView.set(val);
             return;
         } else if (key == "file") {
-            //retrieve the file id
-            //console.log(target.data("file"));
             let selectedView = self.selectedDisplayView.get();
             let fileId = target.data("file");
 
-            if (selectedView && fileId) {
-
-                Devices.update(device._id,
-                    {
-                        $addToSet: { ["views." + selectedView + ".files"]: fileId }
-                    }
-                );
-
-                /* console.log(device);
+            if (selectedView && fileId && device.views !== undefined && device.views[selectedView] !== undefined) {
                 let deviceFilesList = device.views[selectedView].files;
-
                 if (Array.isArray(deviceFilesList)) {
-
                     if (!deviceFilesList.includes(fileId)) {
                         deviceFilesList.push(fileId);
-
                         data["views." + selectedView + ".files"] = deviceFilesList;
-                    }else{
-                        console.log("List already includes this file.");
-                        //end this update
-                        return;
                     }
-
                 } else {
                     //nothing exists -> create array
-                    //data["views." + selectedView + ".files"] = [fileId];
-                    Devices.update(device._id, 
-                        {
-                            $set: { ["views." + selectedView + ".files"] : [fileId] }
-                        }
-                    );
-                } */
-
-
+                    data["views." + selectedView + ".files"] = [fileId];
+                }
+            } else {
+                //nothing exists -> create array
+                data["views." + selectedView + ".files"] = [fileId];
             }
-
-            //console.log(data);
-            //return;
         } else {
             data[key] = val;
         }
 
+        if (!$.isEmptyObject(data)) {
+            Devices.update(device._id, {
+                $set: data
+            });
+        }
 
-        Devices.update(device._id, {
-            $set: data
-        });
 
     });
 
@@ -139,12 +112,18 @@ Template.Devices_edit.events({
         let device = tmpl.device.get();
         let view = tmpl.selectedDisplayView.get();
         let fileId = target.data("file");
+        let index = target.data("index");
 
         if (device && view) {
-            Devices.update(device._id,
-                { $pull: { ["views." + view + ".files"]: fileId } },
-                { multi: true }
-            );
+            let deviceFilesList = device.views[view].files;
+            //remove item index
+            deviceFilesList.splice(index, 1);
+
+            Devices.update(device._id, {
+                $set: { ["views." + view + ".files"]: deviceFilesList }
+            });
+
+
         }
 
     },
@@ -166,36 +145,46 @@ Template.Devices_edit.helpers({
     "deviceDoc": function () {
         return Template.instance().device.get();
     },
-    "renderEvent": function (doc) {
-        if (!doc)
+    "renderEvent": function (deviceId) {
+        //console.log(deviceId);
+        if (!deviceId)
             return;
 
         let tmpl = Template.instance();
-        tmpl.device.set(doc);
-        tmpl.selectedDisplayView.set(doc.published_view);
+        let device = Devices.findOne(deviceId);
+
+        tmpl.device.set(device);
+
+        if (tmpl.templateStartup.get()) {
+            //render startup event
+            tmpl.selectedDisplayView.set(device.published_view);
+            tmpl.templateStartup.set(false);
+        }
 
 
         return;
     },
-    "getViewFiles": function(){
-        let device = Template.instance().device.get();
-        if(device){
+    "getViewFiles": function () {
+        let tmpl = Template.instance();
+        let device = tmpl.device.get();
+        //let view = tmpl.selectedDisplayView.get();
+        if (device && device.published_view !== undefined) {
             return device.views[device.published_view].files;
         }
 
         return [];
-        
+
     },
-    "publishedDisplayView": function(){
+    "publishedDisplayView": function () {
         let device = Template.instance().device.get();
-        if(device){
+        if (device) {
             return device.published_view;
         }
 
         return "";
-        
+
     },
-    "displayViewExists": function(){
+    "displayViewExists": function () {
         return Template.instance().selectedDisplayView.get();
     },
     "displayViewEdit": function (viewType) {

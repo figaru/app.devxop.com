@@ -2,38 +2,9 @@ import './item.files.html';
 
 
 
+let template = Template.instance();
 var slideIndex = 0;
-var timeOut;
-function stopSlides() {
-    clearTimeout(timeOut);
-}
-function showSlides() {
-    //important not to duplicate and have multiple events
-    stopSlides();
 
-    let slides = $("img.slide-item");
-    /* console.log(slides); */
-    if (slides[0] && slides.length > 1) {
-        slides.each(function () {
-            $(this).fadeOut(00);
-        });
-
-        slideIndex++;
-        if (slideIndex > slides.length) {
-            slideIndex = 1
-        }
-        //slides[slideIndex - 1].style.display = "block";
-        $(slides[slideIndex - 1]).fadeIn(200);
-
-    }else{
-        slideIndex = 0;
-        $(slides[slideIndex]).fadeIn(0);
-    }
-
-    timeOut = setTimeout(showSlides, 3000); // Change image every 2 seconds
-
-
-}
 
 Template.item_files.onCreated(function () {
 
@@ -43,27 +14,35 @@ Template.item_files.onCreated(function () {
     this.otherFile = new ReactiveVar(false);
     this.src = new ReactiveVar();
 
+    this.showSlides = new ReactiveVar(false);
+    this.timeOut = new ReactiveVar();
+
     //showSlides();
-})
+});
 
 Template.item_files.helpers({
-    'docChanged': function (doc) {
+    'docChanged': function (files, file) {
         let tmpl = Template.instance();
+        template = tmpl;
         //console.log("doc changed!");
 
-        let file = tmpl.data.file;
-        let files = tmpl.data.files;
+        /* let file = tmpl.data.file;
+        let files = tmpl.data.files; */
 
-        if (!file) {
+        //reset
+        tmpl.showSlides.set(false);
+
+        if (files) {
             if (Array.isArray(files) && files.length > 0) {
                 tmpl.files.set(files);
+                tmpl.showSlides.set(true);
             }
-        } else {
-            if (isMeteorId(doc)) {
+        } else if (file) {
+            if (isMeteorId(file)) {
                 //doc is id -> find correct file
-                tmpl.file.set(Files.findOne(doc));
+                tmpl.file.set(Files.findOne(file));
             } else {
-                tmpl.file.set(doc);
+                tmpl.file.set(file);
             }
         }
 
@@ -84,14 +63,17 @@ Template.item_files.helpers({
             filesId.forEach(fileId => {
                 let file = Files.findOne(fileId);
 
-                let fileUrls = fileUrl(file._id);
-                if (file.is_video) {
-                    data.push(fileUrls.preview)
-                } else if (file.is_image) {
-                    data.push(fileUrls.thumb);
+                if (file) {
+                    let fileUrls = fileUrl(file._id);
+                    if (file.is_video) {
+                        data.push(fileUrls.preview)
+                    } else if (file.is_image) {
+                        data.push(fileUrls.thumb);
+                    }
                 }
 
             });
+
         }
 
 
@@ -134,14 +116,43 @@ Template.item_files.onRendered(function () {
     this.autorun(function () {
 
         let file = self.file.get();
-        let files = self.files.get();
-        /* console.log(file);
-        console.log(files); */
+        let files = self.file.get();
 
+        let showSlides = self.showSlides.get();
 
+        if (showSlides) {
+            //console.log(self.timeOut.get());
+            clearTimeout(self.timeOut.get());
 
-        if (Array.isArray(files)) {
-            showSlides();
+            let index = self.slideIndex.get();
+            let slides = self.$("img.slide-item");
+            /* console.log(slides); */
+            if (slides[0] && slides.length > 1) {
+                slides.each(function () {
+                    $(this).fadeOut(0);
+                });
+
+                index++;
+                if (index > slides.length) {
+                    index = 1;
+                }
+                //slides[slideIndex - 1].style.display = "block";
+                $(slides[index - 1]).fadeIn(200);
+
+            } else {
+                index = 1;
+                $(slides[index - 1]).fadeIn(0);
+            }
+
+            self.slideIndex.set(index);
+            self.showSlides.set(false);
+            //set time out to later clear
+            timeOut = setTimeout(function () {
+                //trigger show slides chnage
+                self.showSlides.set(true);
+            }, 3000);
+
+            self.timeOut.set(timeOut);
         }
 
         if (file) {

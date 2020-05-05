@@ -7,7 +7,8 @@
                 <div class="file-thumb">
                     <!-- <i class="material-icons">folder</i> -->
                     <!-- <img src="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/main.jpeg"> -->
-                    {{>img file=docFile}}
+                    <!-- {{>img file=docFile}} -->
+                    {{> item_files file=docFile}}
                 </div>
                 <div class="file-info">
                     <div class="file-name">{{docFile.file.name}}</div>
@@ -63,7 +64,8 @@
                     <div class="right-col">
                         <div class="row">
                             <div class="col-xs-12">
-                                {{>img file=this.doc classStyle="img-full" fullscreen=true}}
+                                <!-- {{>img file=this.doc classStyle="img-full" fullscreen=true}} -->
+                                {{> item_files file=this.doc fullscreen="true"}}
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <h6>Date Created</h6>
