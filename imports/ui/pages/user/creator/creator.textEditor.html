@@ -1,0 +1,100 @@
+<template name="creator_textEditor">
+    <div class="text-input p-3">
+        {{> text_input eventId="creatorEvent" 
+            maxLength=100 
+            key="text" 
+            placeholder="Write some text here"
+            label="Text"
+            value=this.text
+            }}
+    </div>
+    <div class="content-row">
+        <div class="row-label">
+            Format
+        </div>
+        <div class="row-sub-label"></div>
+        <div class="row-content">
+            <div class="text-format">
+                <div class="js-edit-text {{get_text_values.bold}}"
+                    data-key="text_style" data-sub-key="font-weight" data-value="bold"><i class="material-icons">format_bold</i></div>
+                <div class="js-edit-text {{get_text_values.italic}}" 
+                    data-key="text_style" data-sub-key="font-style" data-value="italic"><i class="material-icons">format_italic</i></div>
+                <div class="js-edit-text {{get_text_values.underline}}" 
+                    data-key="text_style" data-sub-key="text-decoration" data-value="underline"><i class="material-icons">format_underline</i></div>
+                <div class="js-edit-text {{get_text_values.line_through }}" 
+                    data-key="text_style" data-sub-key="text-decoration" data-value="line-through"><i class="material-icons">format_strikethrough</i></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="content-row">
+        <div class="row-label">
+            Font Family
+        </div>
+        <div class="row-sub-label"></div>
+        <div class="row-content">
+            {{> dropdown_input eventId="creatorEvent" list=get_font_list label="Fonts" selected=this.published_view}}
+        </div>
+    </div>
+    <div class="content-row">
+        <div class="row-label">
+            Font Size
+        </div>
+        <div class="row-sub-label">
+            {{get_text_values.font_size}}
+        </div>
+        <div class="row-content">
+            <div class="font-size">
+                <div class="js-edit-text" 
+                    data-key="text_style" data-sub-key="font-size" data-metric="px" data-value="sub"><i class="material-icons">remove</i></div>
+                <div class="js-edit-text" 
+                    data-key="text_style" data-sub-key="font-size" data-metric="px" data-value="inc"><i class="material-icons">add</i></div>
+            </div>
+        </div>
+    </div>
+    <div class="content-row">
+        <div class="row-label">
+            Text Color
+        </div>
+        <div class="row-sub-label"></div>
+        <div class="row-content">
+            <div class="text-color" pd-popup-open="popupColorPicker">
+                <div class="box-color" style="background-color: {{get_text_values.color}};"></div>
+                <i class="material-icons">keyboard_arrow_right</i>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- POPUP color picker -->
+    <div class="popup" pd-popup="popupColorPicker" pd-popup-close="popupColorPicker">
+        <div class="popup-inner small">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>Pick a color</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupColorPicker">
+                                clear</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-content">
+                    <div class="full-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <div class="color-container" data-key="text_style" data-sub-key="color"
+                                    acp-color="{{value.color}}" acp-show-rgb="no" acp-show-hsl="no" acp-show-hex="yes"
+                                    acp-show-alpha></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

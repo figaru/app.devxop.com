@@ -18,18 +18,18 @@
                 <div class="btn-icon hovicon"><i class="material-icons">account_circle</i></div>
             </div>
         </div>
-        <div id="app-content" class="drawer-toggled">
+        <div id="app-content" class="drawer-toggled {{toggleJobs}}">
             <div class="drawer">
                 <div class="account">
                     <div class="image">
                         <img
-                            src="https://yt3.ggpht.com/a/AATXAJyq7p1x4cXXb-UeiPAqH-yL84ZW-KxjzTZe3g=s176-c-k-c0x00ffffff-no-rj">
+                            src="https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png">
                         <div class="img-hover">
                             <i class="material-icons">open_in_new</i>
                         </div>
                     </div>
                     <div class="entity">Account</div>
-                    <div class="name">Daniel Abrantes</div>
+                    <div class="name">John Doe</div>
                 </div>
                 <div class="item
                  hoverable js-link" data-route="dashboard">
@@ -91,8 +91,10 @@
                 <div class="page-content">
                     {{> Template.dynamic template=main}}
                 </div>
-
             </div>
+
+
+            {{> bar_jobs}}
         </div>
     </div>
 

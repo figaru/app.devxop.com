@@ -4,4 +4,5 @@
 //API
 import '../../api/devices/devices.collection.js';
 import '../../api/files/files.collection.js';
+import '../../api/jobs/jobs.collection.js';
 import '../../api/companies/companies.js';

@@ -36,6 +36,11 @@ runtimeFromDate = function (oldDate) {
             return minutes + " minute ago"
         }
         return minutes + " minutes ago"
+    }else{
+        if(seconds == 1){
+            return seconds + " second ago"
+        }
+        return seconds + " seconds ago"
     }
 
     return "Time until new year:\nDays: " + days + " Hours: " + hours + " Minutes: " + minutes + " Seconds: " + seconds;

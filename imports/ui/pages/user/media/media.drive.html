@@ -1,6 +1,16 @@
 <template name="Media_drive">
     {{> Media_file doc=editingFile}}
     <div class="drive-container">
+        <div class="header">
+            {{#if queryType "videos"}}
+            <div class="action-item">
+                <button pd-popup-open="popupCreateCollection">
+                    Video merger
+                </button>
+
+            </div>
+            {{/if}}
+        </div>
         <div class="file-listing">
             {{#each docFile in listFiles}}
             <div class="file-item" pd-popup-open="popupFile" data-file="{{docFile._id}}">
@@ -8,27 +18,114 @@
                     <!-- <i class="material-icons">folder</i> -->
                     <!-- <img src="http://localhost/files/bxxpwy2cwGNumjWTK/e39EXRuqvfNZuB26c/main.jpeg"> -->
                     <!-- {{>img file=docFile}} -->
-                    {{> item_files file=docFile}}
+                    {{> item_files file=docFile info=true}}
                 </div>
-                <div class="file-info">
+                <!-- <div class="file-info">
                     <div class="file-name">{{docFile.file.name}}</div>
-                    <!-- <div class="file-size">{{formatBytes docFile.file.size}}</div> -->
-                </div>
+                </div> -->
             </div>
             {{else}}
             no files available
             {{/each}}
         </div>
     </div>
-</template>
 
-<template name="Media_file">
-    <div class="popup" pd-popup="popupFile" pd-popup-close="popupFile">
+    <!-- POPUP CREATE COLLLECTION -->
+    <div class="popup" pd-popup="popupCreateCollection" pd-popup-close="popupCreateCollection">
         <div class="popup-inner">
             <div class="popup-wrapper">
                 <div class="popup-header">
                     <div class="title">
-                        <h5>{{this.doc.title}}</h5>
+                        <h5>Video Merger</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupCreateCollection">
+                                clear</span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="popup-content">
+                    <div class="full-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <h5>Merge together multiple videos</h5>
+                                <div class="sub-label">Video merger allows you to select videos in your media drive and
+                                    bind them into one seperate video file. The original videos will not be manipulated
+                                    or removed.
+                                    Once started, the process will take a couple of minutes to complete. You will be
+                                    able to track the progress while continuing with your usual work.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                {{> text_input eventId="videoMergerEvent" maxLength=100 key="title" placeholder="Add a name that describes the file" value=this.title
+                                label="Name"}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5>Select Videos</h5>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="sub-label">Select your video contents to create a video collection.</div>
+                            </div>
+                        </div>
+                        {{> select_files eventId="videoMergerEvent" key="files" fileType="video"}}
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <div class="display-view-edit">
+                                    <div class="file-listing">
+                                        <div class="file-item">
+                                            <div class="add-file" pd-popup-open="popupFileSelect">
+                                                <i class="material-icons">add_photo_alternate</i>
+                                                <span>Add a file...</span>
+                                            </div>
+                                        </div>
+                                        {{#each fileId in collectionFiles}}
+                                        <div class="file-item">
+                                            {{> item_files file=fileId info=true}}
+                                            <div class="remove-file js-collection-remove-file" data-index="{{@index}}">
+                                                <i class="material-icons">delete</i>
+                                            </div>
+
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <h5>Expected Output</h5>
+                                <div class="sub-label">Select your video contents to create a video collection.</div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <button class="js-create-collection">Merge files!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- EDIT FILE POPUP -->
+    <div class="popup" pd-popup="popupFile" pd-popup-close="popupFile">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                {{#with editingFile}}
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>{{this.title}}</h5>
                     </div>
                     <div class="actions">
                         <div class="action-item">
@@ -51,12 +148,12 @@
                     <div class="left-col">
                         <div class="row">
                             <div class="col-xs-12 pb-3">
-                                
-                                {{> text_input eventId="fileEdit" maxLength=100 key="title" placeholder="Add a name that describes the file" value=this.doc.title
+
+                                {{> text_input eventId="fileEditEvent" maxLength=100 key="title" placeholder="Add a name that describes the file" value=this.title
                                 label="Name"}}
                             </div>
                             <div class="col-xs-12 pb-3">
-                                {{>text_input eventId="fileEdit" style="min-height: 100px" maxLength=1000 key="description" placeholder="Describe what this image is..." value=this.doc.description
+                                {{>text_input eventId="fileEditEvent" style="min-height: 100px" maxLength=1000 key="description" placeholder="Describe what this image is..." value=this.description
                                 label="Description"}}
                             </div>
                         </div>
@@ -64,33 +161,39 @@
                     <div class="right-col">
                         <div class="row">
                             <div class="col-xs-12">
+                                <div style="width: 100%; height: 180px;">
+                                    {{> item_files file=this fullscreen="true"}}
+                                </div>
                                 <!-- {{>img file=this.doc classStyle="img-full" fullscreen=true}} -->
-                                {{> item_files file=this.doc fullscreen="true"}}
+
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <h6>Date Created</h6>
-                                <div class="sub-label">{{parseDate this.doc.createdAt}}</div>
+                                <div class="sub-label">{{parseDate this.createdAt}}</div>
                             </div>
                             <div class="col-xs-12">
                                 <h6>Size</h6>
-                                <div class="sub-label">{{formatBytes this.doc.file.size}}</div>
+                                <div class="sub-label">{{formatBytes this.file.size}}</div>
                             </div>
                             <div class="col-xs-12">
                                 <h6>Filename</h6>
-                                <div class="sub-label">{{this.doc.file.name}}</div>
+                                <div class="sub-label">{{this.file.name}}</div>
                             </div>
                             <div class="col-xs-12">
-                                <button id="{{this.doc._id}}" class="js-delete">Delete</button>
+                                <button id="{{this._id}}" class="js-delete">Delete</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="popup-footer">
-                    footer
-                </div>
+                {{/with}}
             </div>
 
         </div>
     </div>
+
+</template>
+
+<template name="Media_file">
+
 </template>

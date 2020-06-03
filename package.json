@@ -2,17 +2,20 @@
   "name": "app.devxop.com",
   "private": true,
   "scripts": {
-    "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha"
+    "start": "meteor run"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.3",
+    "a-color-picker": "^1.2.1",
     "babel-plugin-root-import": "^6.5.0",
     "bcrypt": "^4.0.1",
     "css-element-queries": "^1.2.3",
     "dotenv": "^8.2.0",
+    "highcharts": "^8.1.0",
     "jquery": "^3.4.1",
-    "meteor-node-stubs": "^1.0.0"
+    "jquery-ui-bundle": "^1.12.1-migrate",
+    "meteor-node-stubs": "^1.0.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^4.1.2"

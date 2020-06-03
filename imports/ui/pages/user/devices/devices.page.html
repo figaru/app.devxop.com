@@ -1,7 +1,9 @@
 <template name="Devices">
     {{> Devices_edit deviceId=editingFile}}
     <div id="devices-container">
-
+        <div class="devices-graph">
+            {{> graph_devices}}
+        </div>
         <div class="devices-wrapper">
             <div class="Rtable Rtable--5cols cell-head Rtable--collapse">
 
@@ -39,26 +41,19 @@
                     </div>
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    {{#if isDeviceOnline device}}
-                        Online
-                    {{else}}
-                        Offline
-                    {{/if}}
+                    {{> status_device device=device}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
                     {{device.published_view}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
-                    {{#if isDeviceOnline device}}
-                    {{runtimeFromDate device.startup_stamp}}
-                    {{else}}
-                    ---
-                    {{/if}}
+                    {{> runtime_device device=device}}
                 </div>
                 <div style="order:2" class="Rtable-cell cell-data">
                     <!-- <a class="button" pd-popup-open="popupDevice" data-device="{{device._id}}" href="#">Open Modal</a> -->
                     <div class="device-actions">
-                        <div class="action-button js-device-edit" pd-popup-open="popupDevice" data-device="{{device._id}}">
+                        <div class="action-button js-device-edit" pd-popup-open="popupDevice"
+                            data-device="{{device._id}}">
                             <div class="material-icons">edit</div>
                         </div>
                     </div>
@@ -178,11 +173,21 @@
                             </div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12 pt-4">
+                                <h6>Media Interval</h6>
+                                <div class="sub-label">Choose an interval time between image change.</div>
+                                
+                            </div>
+                            <div class="col-xs-6">
+                                {{> dropdown_input eventId="deviceEdit" list=dropdownIntervalList label="Interval" selected=selectedInterval}}
+                            </div>
+                        </div>
                         {{/if}}
-
+                        {{#if displayViewExists}}
                         <div class="row">
                             <div class="col-xs-12 pb-4 pt-4">
-                                {{#if displayViewExists}}
+
                                 <h6>Status</h6>
                                 {{#if displayViewPublished}}
                                 <div class="sub-label">This display view is currently published to the device.</div>
@@ -192,10 +197,10 @@
                                 <button class="red js-publish-displayView">Publish now!</button>
 
                                 {{/if}}
-                                {{/if}}
+
                             </div>
                         </div>
-
+                        {{/if}}
                     </div>
                     <div class="right-col">
                         <div class="row">
@@ -209,20 +214,12 @@
                         <div class="row">
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Status</div>
-                                {{#if isDeviceOnline this}}
-                                <div class="sub-label">Online</div>
-                                {{else}}
-                                <div class="sub-label">Offline</div>
-                                {{/if}}
-                                
+                                {{> status_device device=this}}
+
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Runtime</div>
-                                {{#if isDeviceOnline this}}
-                                <div class="sub-label">{{runtimeFromDate this.startup_stamp}}</div>
-                                {{else}}
-                                <div class="sub-label">---</div>
-                                {{/if}}
+                                {{> runtime_device device=this}}
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Published View</div>
@@ -230,7 +227,7 @@
                             </div>
                             <div class="col-xs-12 pt-3">
                                 <div class="label">Action</div>
-                                <div class="sub-label"><button>Force Update</button></div>
+                                <div class="sub-label"><button class="js-force-restart">Force Restart</button></div>
                             </div>
                         </div>
                     </div>

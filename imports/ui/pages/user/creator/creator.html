@@ -1,0 +1,349 @@
+<template name="Creator">
+    <div class="creator-container">
+
+        <div class="creator-header">
+            <div class="nav-actions">
+
+            </div>
+        </div>
+
+        <div class="creator-content">
+            <div class="editor-left">
+                <div class="layer-list">
+                    <div class="list-label">
+                        <i class="material-icons">layers</i>
+                        <div class="label-text">Canvas Layers</div>
+                    </div>
+                    <div class="list-content">
+                        {{#each layer in list_layers}}
+                        <div class="list-item {{is_layer_selected layer}}">
+                            <div class="item js-select-layer" data-layer-id="{{layer._id}}">
+                                <i class="material-icons">texture</i>
+                                <div class="item-label no-select">{{layer.name}}</div>
+                                <div class="action js-toggle-layer-visibility" data-layer-id="{{layer._id}}">
+                                    <i class="material-icons {{is_layer_visible layer}}">{{is_layer_visible layer}}</i>
+                                </div>
+                            </div>
+
+                            <div class="sub-list">
+                                {{#each item in list_items layer}}
+                                <div class="sub-item {{is_item_selected item}} js-select-item"
+                                    data-item-id="{{item._id}}">
+                                    <div class="item-label">{{item.name}}</div>
+                                    <i class="material-icons editing">edit</i>
+                                </div>
+                                {{else}}
+                                <div class="sub-item no-hover">
+                                    <div class="item-label">No items for this layer</div>
+                                </div>
+                                {{/each}}
+                                <div class="sub-list-footer" pd-popup-open="popupNewItem">
+                                    <i class="material-icons">add</i>
+                                    <div class="label-text">Item</div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+
+                    <div class="list-footer" pd-popup-open="popupNewLayer">
+                        <i class="material-icons">note_add</i>
+                        <div class="label-text">New Layer</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-viewport">
+                <div id="viewport" class="viewport">
+                    {{#each layer in list_layers}}
+                    <div class="layer {{is_layer_selected layer}} {{is_layer_visible layer}}">
+                        {{#each item in list_items layer}}
+                        <div id="item-{{item._id}}"
+                            class="item draggable resizable {{is_item_selected item}} {{item.type}}"
+                            style="{{parseStyle item.style}}" data-item-id="{{item._id}}">
+
+                            {{#if is_item_type item "item-type-1"}}
+                            <div class="item-type-1">
+                                <div class="col-1">
+                                    {{#with get_text item.primary_text}}
+                                    <span class="primary" style="{{parseStyle style}}">{{text}}</span>
+                                    {{/with}}
+
+                                    {{#with get_text item.secondary_text}}
+                                    <span class="secondary" style="{{parseStyle style}}">{{text}}</span>
+                                    {{/with}}
+                                </div>
+                                <div class="col-2">
+                                    {{#with get_text item.extra_text}}
+                                    <span class="extra" style="{{parseStyle style}}">{{text}}</span>
+                                    {{/with}}
+
+                                </div>
+
+                            </div>
+                            {{/if}}
+
+                            {{#if is_item_type item "image"}}
+                            <div class="creator-item-type image">
+                                <img src="{{item.src}}">
+                            </div>
+                            {{/if}}
+
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="editor-right">
+                {{#with get_selected_item}}
+                {{#let item=this}}
+                <div class="item-list">
+                    <div class="list-label">
+                        <i class="material-icons">edit</i>
+                        <div class="label-text">Editing : {{item.name}}</div>
+                        <i class="material-icons action js-delete-item">delete_forever</i>
+                    </div>
+
+                    <div class="item-content">
+                        <div class="content-label js-select-text {{is_selected_text}}" data-text-id="{{this._id}}">
+                            Box Format
+                        </div>
+                        <div class="content-row">
+                            <div class="row-label">
+                                Width
+                            </div>
+                            <div class="row-sub-label">
+                                %
+                            </div>
+                            <div class="row-content">
+                                <div class="number-input">
+                                    <input type="number" class="js-edit-item" data-key="width"
+                                        value="{{get_item_values.width}}"
+                                        oninput="javascript: if (this.value > 100){this.value = 100}else if(this.value < 0){ this.value = 0} "
+                                        maxlength="6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-row">
+                            <div class="row-label">
+                                Height
+                            </div>
+                            <div class="row-sub-label">
+                                %
+                            </div>
+                            <div class="row-content">
+                                <div class="number-input">
+                                    <input type="number" class="js-edit-item" data-key="height"
+                                        value="{{get_item_values.height}}"
+                                        oninput="javascript: if (this.value > 100){this.value = 100}else if(this.value < 0){ this.value = 0} "
+                                        maxlength="6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-row">
+                            <div class="row-label">
+                                Padding
+                            </div>
+                            <div class="row-sub-label">
+                                {{get_item_values.padding}}
+                            </div>
+                            <div class="row-content">
+                                <div class="font-size">
+                                    <div class="js-edit-item" data-key="item_style" data-sub-key="padding"
+                                        data-metric="px" data-value="sub"><i class="material-icons">remove</i></div>
+                                    <div class="js-edit-item" data-key="item_style" data-sub-key="padding"
+                                        data-metric="px" data-value="inc"><i class="material-icons">add</i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {{#if has_image_src}}
+                    <div class="text-input p-3">
+                        {{> text_input eventId="creatorEvent" 
+                            maxLength=100 
+                            key="image-src" 
+                            placeholder="Enter an image Url here..."
+                            label="Image Url"
+                            value=this.text
+                            }}
+
+                        <br>
+                        <input type="file" class="js-input-image">
+                    </div>
+                    {{/if}}
+
+                    {{#with get_text item.primary_text}}
+                    <div class="item-content">
+                        <div class="content-label js-select-text {{is_selected_text}}" data-text-id="{{this._id}}">
+                            Primary Text
+                        </div>
+                        {{#with get_selected_text_editor}}
+                        {{> creator_textEditor}}
+                        {{/with}}
+                    </div>
+                    {{/with}}
+
+                    {{#with get_text item.secondary_text}}
+                    <div class="item-content">
+                        <div class="content-label js-select-text {{is_selected_text}}" data-text-id="{{this._id}}">
+                            Secondary Text
+                        </div>
+                        {{#with get_selected_text_editor}}
+                        {{> creator_textEditor}}
+                        {{/with}}
+                    </div>
+                    {{/with}}
+
+
+                    {{#with get_text item.extra_text}}
+                    <div class="item-content">
+                        <div class="content-label js-select-text {{is_selected_text}}" data-text-id="{{this._id}}">
+                            Extra Text
+                        </div>
+                        {{#with get_selected_text_editor}}
+                        {{> creator_textEditor}}
+                        {{/with}}
+                    </div>
+                    {{/with}}
+
+
+
+                </div>
+                {{/let}}
+
+                {{else}}
+                <div class="item-list">
+                    <div class="list-label">
+                        <i class="material-icons">edit</i>
+                        <div class="label-text">Editor</div>
+
+                    </div>
+                    <div class="unselected-label">
+                        <div class="label-text">
+                            <div class="text">No item selected to edit</div>
+                            <i class="material-icons">touch_app</i>
+                        </div>
+                    </div>
+                </div>
+                {{/with}}
+            </div>
+        </div>
+
+        <div class="creator-footer">
+           
+        </div>
+    </div>
+
+
+    <!-- POPUP NEW ITEM -->
+    <div class="popup" pd-popup="popupNewItem" pd-popup-close="popupNewItem">
+        <div class="popup-inner">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>New Item</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupNewItem">
+                                clear</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-content">
+                    <div class="full-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <div class="sub-label">To create a new item please type describe it with a
+                                    name and select what design style you would like this item to have.
+                                </div>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                {{> text_input eventId="creatorEvent" maxLength=100 key="new-item-name" placeholder="Add a name the item"
+                                label="Name"}}
+                            </div>
+                            <div class="col-xs-12 pt-3 pb-3">
+                                <h4>Text Items</h4>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                <div class="item-type-1 preview js-select-item-type" data-type="three-text-1">
+                                    <div class="col-1">
+                                        <span>Primary text</span>
+                                        <span>Secondary</span>
+                                        <span></span>
+                                    </div>
+                                    <div class="col-2">
+                                        <span>Extra</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                <div class="creator-item-type single-text preview js-select-item-type" data-type="image">
+                                    <div>Single Text Box</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 pt-3 pb-3">
+                                <h4>Image Items</h4>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                <div class="creator-item-type image preview js-select-item-type" data-type="single-text">
+                                    <div><i class="material-icons">photo</i></div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 pt-3">
+                                <button class="js-create-item">Create Item</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- POPUP NEW LAYER -->
+    <div class="popup" pd-popup="popupNewLayer" pd-popup-close="popupNewLayer">
+        <div class="popup-inner small">
+            <div class="popup-wrapper">
+                <div class="popup-header">
+                    <div class="title">
+                        <h5>New Layer</h5>
+                    </div>
+                    <div class="actions">
+                        <div class="action-item">
+                            <span class="material-icons popup-close" pd-popup-close="popupNewLayer">
+                                clear</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-content">
+                    <div class="full-col">
+                        <div class="row">
+                            <div class="col-xs-12 pb-3">
+                                <div class="sub-label">To create a new layer please type in a name that is easy to
+                                    describe.
+                                    Make sure it is a memorable one so that it can be easy for you to distiguish between
+                                    multiple layers.
+                                </div>
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                {{> text_input eventId="creatorEvent" maxLength=100 key="new-layer-name" placeholder="Add a name that describes the layer"
+                                label="Name"}}
+                            </div>
+                            <div class="col-xs-12 pb-3">
+                                <button class="js-create-layer">Create Layer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

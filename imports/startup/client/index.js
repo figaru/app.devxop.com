@@ -17,9 +17,13 @@ import '../../ui/layouts/user/user.layout.js';
 import './routes/dashboard.user.js';
 import './routes/devices.user.js';
 import './routes/media.user.js';
+import './routes/creator.user.js';
 
 /* PAGES */
 //import "../../ui/pages/user/media/media.js";
+
+//SESSION CONSTANTS
+import '../../ui/_session.constants.js';
 
 import "../../ui/pages/index";
 
@@ -31,10 +35,16 @@ import '../../ui/utils/index.js';
 import '../../ui/components/index.components.js';
 
 
+
+
 import ElementQueries from 'css-element-queries/src/ElementQueries';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session'
 
+import 'jquery-ui-bundle';
+import 'jquery-ui-bundle/jquery-ui.css';
 
+import AColorPicker from 'a-color-picker';
 
 $(() => {
 
@@ -46,6 +56,8 @@ $(() => {
   // have rules attached (make sure this is called after 'load' event, because
   // CSS files are not ready when domReady is fired.
   ElementQueries.init();
+
+  window["ColorPicker"] = AColorPicker;
 })
 
 

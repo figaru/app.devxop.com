@@ -34,8 +34,15 @@
                 {{/if}}
 
                 {{#if this.info}}
-                <div class="file-info">
+                <!-- <div class="file-info">
                     {{#if file.tilte}}
+                    <span>{{file.title}}</span>
+                    {{else}}
+                    <span>{{file.file.name}}</span>
+                    {{/if}}
+                </div> -->
+                <div class="info-hover">
+                    {{#if file.title}}
                     <span>{{file.title}}</span>
                     {{else}}
                     <span>{{file.file.name}}</span>

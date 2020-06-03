@@ -62,7 +62,7 @@ Template.Devices_edit.onRendered(function () {
         let key = target.data("key");
         let val = target.val();
         let data = {};
-        
+
         if (target.is('div')) {
             //then it does not have value attr use data-value=""
             val = target.data("value");
@@ -72,24 +72,39 @@ Template.Devices_edit.onRendered(function () {
             //set the current display view in edit mode
             self.selectedDisplayView.set(val);
             return;
+        } else if (key == "interval") {
+            //set the current view interval speed
+            let selectedView = self.selectedDisplayView.get();
+            if (selectedView) {
+                data["views." + selectedView + ".interval"] = val;
+            }
         } else if (key == "file") {
             let selectedView = self.selectedDisplayView.get();
             let fileId = target.data("file");
 
             if (selectedView && fileId && device.views !== undefined && device.views[selectedView] !== undefined) {
                 let deviceFilesList = device.views[selectedView].files;
-                if (Array.isArray(deviceFilesList)) {
-                    if (!deviceFilesList.includes(fileId)) {
-                        deviceFilesList.push(fileId);
-                        data["views." + selectedView + ".files"] = deviceFilesList;
-                    }
-                } else {
-                    //nothing exists -> create array
+
+                if (selectedView == "video") {
                     data["views." + selectedView + ".files"] = [fileId];
+                } else {
+                    if (Array.isArray(deviceFilesList)) {
+                        if (!deviceFilesList.includes(fileId)) {
+                            deviceFilesList.push(fileId);
+                            data["views." + selectedView + ".files"] = deviceFilesList;
+                        }
+                    } else {
+                        //nothing exists -> create array
+                        data["views." + selectedView + ".files"] = [fileId];
+                    }
                 }
+
             } else {
                 //nothing exists -> create array
-                data["views." + selectedView + ".files"] = [fileId];
+                data["views." + selectedView] = {
+                    "files": [fileId],
+                    "interval": 9000
+                };
             }
         } else {
             data[key] = val;
@@ -136,6 +151,25 @@ Template.Devices_edit.events({
                     "published_view": view
                 }
             });
+        }
+
+    },
+    'click .js-force-restart': function (e, tmpl) {
+        let target = $(e.target);
+        let device = tmpl.device.get();
+        if (device) {
+            target.attr("disabled", true);
+
+            setTimeout(function () {
+                Meteor.call("devices.emit.restart", device._id, function (err) {
+                    if (err) {
+                        console.log("an error ocurred");
+                    }
+
+                    target.removeAttr("disabled");
+                });
+            }, 2000)
+
         }
 
     }
@@ -196,6 +230,23 @@ Template.Devices_edit.helpers({
         let device = Template.instance().device.get();
         return typeof selectedView != "undefined" && selectedView === device.published_view ? true : false;
     },
+    "selectedInterval": function () {
+        //return interval based on selected display view
+        let selectedView = Template.instance().selectedDisplayView.get();
+        let device = Template.instance().device.get();
+        let interval = device.views[selectedView].interval;
+
+        if (interval) {
+            //console.log(interval);
+            if (interval == 7000) {
+                return "Fast(7sec)";
+            } else if (interval == 10000) {
+                return "Medium(10sec)";
+            } else if (interval == 12000) {
+                return "Slow(12sec)";
+            }
+        }
+    },
     "dropdownViewList": function () {
         return [
             {
@@ -207,6 +258,25 @@ Template.Devices_edit.helpers({
                 "key": "display_view",
                 "value": "image",
                 "label": "Image"
+            }
+        ];
+    },
+    "dropdownIntervalList": function () {
+        return [
+            {
+                "key": "interval",
+                "value": 7000,
+                "label": "Fast(7sec)"
+            },
+            {
+                "key": "interval",
+                "value": 10000,
+                "label": "Medium(10sec)"
+            },
+            {
+                "key": "interval",
+                "value": 12000,
+                "label": "Slow(12sec)"
             }
         ];
     }

@@ -9,10 +9,10 @@
     display: block;
     position: relative;
 
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 
 
 
@@ -34,8 +34,9 @@
 
     >.file-preview {
         width: 100%;
+        height: 100%;
         background-color: var(--color-grey-trans);
-        flex-grow: 2;
+
         display: flex;
         overflow: hidden;
 
@@ -58,17 +59,22 @@
 
     >.file-info {
         width: 100%;
-        min-height: 20px;
-        height: 10%;
+        height: fit-content;
         background-color: var(--color-light);
-        padding: 1% 2%;
 
         display: flex;
 
         border-top: var(--border-sm);
 
+        flex-direction: column;
+        justify-content: center;
+
+        top: -25%;
+        position: relative;
+
         >span {
             width: 100%;
+            padding: 1% 2%;
             font-size: var(--font-h7);
             white-space: nowrap;
             overflow: hidden;
@@ -78,7 +84,7 @@
 
     >.thumbnail {
         width: 100%;
-        flex-grow: 2;
+        height: 100%;
         position: relative;
         object-fit: cover;
 
@@ -107,13 +113,47 @@
         background-color: red;
     }
 
+    >.info-hover {
+
+        cursor: pointer;
+
+        width: 100%;
+        height: 30px;
+        position: relative;
+        background-color: var(--color-light);
+        -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: center;
+        justify-content: center;
+        top: -30px;
+
+        >span {
+            width: 100%;
+            padding: 1% 2%;
+            font-size: var(--font-h7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
     >.thumbnail-hover {
 
         opacity: 0;
         cursor: pointer;
 
         width: 100%;
-        height: 102%;
+        height: 100%;
         position: relative;
         background-color: var(--color-dark-lighter);
         -webkit-transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -130,7 +170,7 @@
         -ms-flex-pack: justify;
         -webkit-justify-content: center;
         justify-content: center;
-        top: -102%;
+        top: -100%;
 
         >i {
             color: var(--color-light);

@@ -1,0 +1,140 @@
+<template name="bar_jobs">
+    {{#if hasJobs}}
+    <div class="footer">
+        <div class="bar-jobs-container">
+
+            <div class="fixed-bar js-toggle-jobs">
+                <div class="bar-item">
+                    <i class="material-icons">vertical_align_top</i>
+                    <!-- <div class="bar-label">Show All</div> -->
+                </div>
+                {{#if hasRunningJob}}
+                <div class="bar-item">
+                    <div class="bar-label">You have tasks[{{runningStats.count}}] running({{runningStats.progress}}%)
+                    </div>
+                </div>
+                {{else}}
+                <div class="bar-item">
+                    <div class="bar-label">Click to expand and view your tasks</div>
+                </div>
+                {{/if}}
+            </div>
+
+            <div class="fixed-bar-toggled js-toggle-jobs">
+                <div class="bar-item center">
+                    <i class="material-icons">vertical_align_bottom</i>
+                </div>
+            </div>
+
+            <div class="jobs-content">
+                <div class="row">
+                    <div class="col-xs-12 pb-3">
+                        <h3>Task Tracker</h3>
+                        <div class="sub-label">
+                            This tracker is used to show progress of varius stages of varius long running tasks the
+                            server is performing.
+                            This tracker will only become available when tasks exist. It will disapear once the jobs
+                            have been cleared.
+                        </div>
+                    </div>
+                </div>
+                <div class="job-col-container">
+                    <div class="jobs-col">
+                        <div class="col-label">
+                            Pending
+                        </div>
+                        <div class="jobs-listing">
+                            {{#each job in listPending}}
+                            <div class="list-item">
+                                <div class="item-tag wait">
+                                    <i class="material-icons">schedule</i>
+                                </div>
+                                <div class="item-label">
+                                    <div class="label">{{job.title}}</div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <div class="list-item">
+                                <div class="item-label">
+                                    <div class="sub-label">No tasks awaiting to be run.</div>
+                                </div>
+                            </div>
+
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="jobs-col">
+                        <div class="col-label">
+                            Running
+                        </div>
+                        <div class="jobs-listing">
+                            {{#each job in listRunning}}
+                            <div class="list-item">
+                                <div class="item-tag info">
+                                    <i class="material-icons">play_arrow</i>
+                                </div>
+                                <div class="item-label">
+                                    <div class="label">{{job.title}}</div>
+                                    <div class="sub-label">Processing ({{job.progress}}%) ...</div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <div class="list-item">
+                                <div class="item-label">
+                                    <div class="sub-label">No tasks currently running.</div>
+                                </div>
+                            </div>
+
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="jobs-col">
+                        <div class="col-label">
+                            <span>Finished</span>
+                            <div class="label-action js-clear-finished">
+                                <i class="material-icons">clear_all</i>
+                            </div>
+                        </div>
+                        <div class="jobs-listing">
+                            {{#each job in listFinished}}
+                            <div class="list-item">
+                                {{#if job.error}}
+
+                                <div class="item-tag error">
+                                    <i class="material-icons">error</i>
+                                </div>
+                                <div class="item-label">
+                                    <div class="label">{{job.title}}</div>
+                                    <div class="sub-label">Something went wrong.</div>
+                                </div>
+                                {{else}}
+                                <div class="item-tag done">
+                                    <i class="material-icons">done_all</i>
+                                </div>
+                                <div class="item-label">
+                                    <div class="label">{{job.title}}</div>
+                                    <div class="sub-label">Completed successfuly</div>
+                                </div>
+                                {{/if}}
+
+
+                            </div>
+                            {{else}}
+                            <div class="list-item">
+                                <div class="item-label">
+                                    <div class="sub-label">Nothing has been completed yet.</div>
+                                </div>
+                            </div>
+
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    {{/if}}
+</template>

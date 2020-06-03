@@ -1,4 +1,143 @@
 <template name="Landing_overview">
+    <header class="landing-header">
+        <div class="logo">
+            <img src="/img/logo40.png" />
+        </div>
+        <div class="nav-bar">
+            <div class="nav-item">
+                <a class="link">Home</a>
+            </div>
+            <div class="nav-item">
+                <a class="link">About</a>
+            </div>
+            <div class="nav-item">
+                <a class="link">Our Apps</a>
+            </div>
+            <!-- <div class="nav-item">
+                <a href="/home" class="btn-outline">Log in</a>
+            </div> -->
+            <div class="nav-item">
+                <a class="btn green">Dashboard</a>
+            </div>
+        </div>
+    </header>
+    <main class="landing-main gradient">
+        <section class="section-home">
+            <div class="row">
+                <div class="col-xs-12 pb-3">
+                    <!-- <img src="/img/devxopWhite.png"> -->
+                    <h1 class="xl-title text-white">DEVXOP</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 pb-5">
+                    <h4 class="text-white text-center">Custom Web, App and Design solutions to meet your business <br> and personal needs.</h4>
+                </div>
+            </div>
+            <div class="home-nav">
+                <div class="nav-item">
+                    <a class="btn">Contact us!</a>
+                </div>
+                <div class="nav-item">
+                    <a class="btn-outline">Our Apps</a>
+                </div>
+            </div>
+        </section>
+        <img class="faded-squares" src="/img/squaresFaded.png">
+        <img class="faded-logo-icon" src="/img/logoIconWhite.png">
+    </main>
+    <main class="landing-main" style="background: white;">
+        <section class="section-two-col">
+            <section class="padding">
+                <img src="/img/pcPhone.png" />
+            </section>
+            <section class="padding">
+                <!-- COL 1 -->
+                <div class="row">
+                    <div class="col-xs-12 pb-3">
+                        <h1>Who area we?</h1>
+                        <h2>Your IT services company</h2>
+                    </div>
+                    <div class="col-xs-12">
+                        <h4 class="text-faded">
+                            At Devxop we believe in teamwork and support to achieve professional success, thus
+                            developing the leadership of our partners.
+                            <br><br>With a team dedicated to the development of applications and graphic design, we
+                            increase your visibility with a graphic and conceptual experience, which will allow you to
+                            attract more potential customers.
+                        </h4>
+                    </div>
+                </div>
+
+            </section>
+
+        </section>
+    </main>
+    <main class="landing-main" style="background-color: #f5f5f5;">
+        <section class="section-two-col bg-squares">
+            <section class="padding">
+                <div class="row">
+                    <div class="col-xs-12 pb-3">
+                        <h1 class="text-center">Get in touch!</h1>
+                        <h4 class="text-center text-faded">Have a project in mind? Don't hesitate to send us a message for more
+                            information about any topic!</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 pb-3">
+                        {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="First and last name" value=this.name label="Your Name"}}
+                    </div>
+                    <div class="col-xs-12 pb-3">
+                        {{> text_input eventId="deviceEdit" maxLength=100 key="name" placeholder="Your email so we can reply back" value=this.name label="Email Address"}}
+                    </div>
+                    <div class="col-xs-12 pb-3">
+                        {{> text_input eventId="deviceEdit" style="min-height: 30px" maxLength=500 key="description" placeholder="Write to us what is on your mind..." value=this.description label="Message"}}
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    <main class="landing-footer gradient">
+        <section class="section-centered">
+
+            <section>
+                <!-- <img src="/img/logoIconDark.png">
+                 -->
+                <div class="nav">
+                    <div class="nav-item">
+                        <a class="link">Home</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="link">About</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="link">Our Apps</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="link">Privacy</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="link">Terms</a>
+                    </div>
+                </div>
+                <!-- <div class="info">A web, app and design development company</div> -->
+                <div class="socials">
+                    <img src="/img/stripe.png">
+                    <img src="/img/payments-stripe.png">
+                </div>
+                <p class="placeholder">© DEVXOP 2020 All rights reserved</p>
+            </section>
+
+        </section>
+    </main>
+</template>
+
+
+
+
+
+
+<!-- <template name="Landing_overview">
     <div id=landing-content>
 
         <div class="row center-xs middle-xs p-5 section">
@@ -59,4 +198,4 @@
 
     </div>
 
-</template>
+</template> -->

@@ -19,3 +19,14 @@ UserRouter.route('/media/drive/:type', {
         BlazeLayout.render('App_user', { main: 'Media_drive', params: params });
     }
 });
+
+UserRouter.route('/media/collections', {
+    name: "media.collections",
+    subscriptions: function(params, queryParams){
+        // using Fast Render
+        //this.register('filesByType', Meteor.subscribe('files.allByType', params.type));
+    },
+    action: function (params, queryParams) {
+        BlazeLayout.render('App_user', { main: 'Media_collections', params: params });
+    }
+});

@@ -175,18 +175,9 @@ Template.item_files.onRendered(function () {
 
             /* console.log(elm); */
             elm.on("error", function () {
-                error = true;
-                if (loadAttempts <= 3) {
-                    setTimeout(() => {
-                        loadAttempts++;
-                        //this.src = this.src;
-                        self.src.set(this.src);
-                    }, 1000);
-                } else {
-                    console.log("no more attemps to load image...");
-                }
+                self.otherFile.set(true);
 
-
+                elm.unbind('error');
             });
 
             elm.on("load", function () {

@@ -23,6 +23,9 @@ Template.App_user.onRendered(() => {
 });
 
 Template.App_user.helpers({
+    'toggleJobs':function(){
+        return Session.get(TOGGLE_JOBS);
+    },
 });
 
 Template.App_user.events({

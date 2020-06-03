@@ -7,6 +7,7 @@ ExposedRouter = FlowRouter.group({
 UserRouter = FlowRouter.group({
     subscriptions: function(params, queryParams) {
         this.register('allFiles', Meteor.subscribe('files.all'));
+        this.register('allJobs', Meteor.subscribe('jobs.all'));
     }
 });
 

@@ -1,0 +1,12 @@
+<template name="number_input">
+    <text-container>
+        <div id="outer">
+            <div class="sub-label">{{this.label}}</div>
+            <!-- <div class="placeholder"> {{this.placeholder}}</div> -->
+        <textarea class="numberbox js-numberbox" style="{{this.style}}" placeholder="{{this.placeholder}}" data-key="{{this.key}}" max="{{this.maxlength}}">{{this.value}}</textarea>
+            <div class="mention"></div>
+        </div>
+    </text-container>
+
+</template>
+
