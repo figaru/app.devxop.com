@@ -5,13 +5,19 @@ ExposedRouter = FlowRouter.group({
 });
 
 UserRouter = FlowRouter.group({
-    subscriptions: function(params, queryParams) {
+    name: "UserGroup",
+    subscriptions: function (params, queryParams) {
         this.register('allFiles', Meteor.subscribe('files.all'));
         this.register('allJobs', Meteor.subscribe('jobs.all'));
-    }
+    },
+    triggersEnter: [function () {
+        if (!Meteor.userId() && !Meteor.loggingIn()) {
+            FlowRouter.go("/");
+        }
+    }]
 });
 
-FlowRouter.triggers.enter([function(context){
+FlowRouter.triggers.enter([function (context) {
     // context is the output of `FlowRouter.current()`
 
     //force update to all route helpers
@@ -21,7 +27,7 @@ FlowRouter.triggers.enter([function(context){
     /* if (!Meteor.userId()) {
         FlowRouter.go("/");
     } */
-}], {except: ["/", "/login"]});
+}], { except: ["/", "/login"] });
 
 ExposedRouter.notFound = {
     action() {

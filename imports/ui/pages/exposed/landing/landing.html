@@ -13,12 +13,15 @@
             <div class="nav-item">
                 <a class="link">Our Apps</a>
             </div>
-            <!-- <div class="nav-item">
-                <a href="/home" class="btn-outline">Log in</a>
-            </div> -->
+            {{#if currentUser}}
             <div class="nav-item">
-                <a class="btn green">Dashboard</a>
+                <a href="/dashboard" class="btn green">Dashboard</a>
             </div>
+            {{else}}
+            <div class="nav-item">
+                <a href="/login" class="btn-outline">Log in</a>
+            </div>
+            {{/if}}
         </div>
     </header>
     <main class="landing-main gradient">

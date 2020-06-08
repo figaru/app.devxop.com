@@ -2,27 +2,12 @@
     {{> Devices_edit deviceId=editingFile}}
     <div id="devices-container">
         <div class="devices-graph">
-            {{> graph_devices}}
+            <!-- {{> graph_devices}} -->
         </div>
         <div class="devices-wrapper">
             <div class="Rtable Rtable--5cols cell-head Rtable--collapse">
 
-                <div style="order:1" class="Rtable-cell cell-header Rtable-cell--head">
-                    Name
-                </div>
-                <div style="order:1" class="Rtable-cell cell-header">
-                    Status
-                </div>
-                <div style="order:1" class="Rtable-cell cell-header">
-                    Display
-                </div>
-                <div style="order:1" class="Rtable-cell cell-header">
-                    Runtime
-                </div>
-                <div style="order:1" class="Rtable-cell cell-header">
-
-                </div>
-
+                
 
                 {{#each device in devicesList}}
                 <div style="order:2" class="Rtable-cell cell-data Rtable-cell--head">

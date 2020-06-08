@@ -12,7 +12,7 @@ Template.Media.onCreated(function () {
 
 Template.Media.helpers({
     'stats': function () {
-        let files = Files.find().fetch();
+        let files = Files.find({"deleting": {$exists: false}}).fetch();
         // do something
         let data = {
             "storage_used": 0,
