@@ -1,4 +1,3 @@
-// Register your apis here
 /* COMPANIES */
 import '../../api/companies/methods.js';
 import '../../api/companies/server/publications.js';

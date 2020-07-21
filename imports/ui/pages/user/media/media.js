@@ -89,7 +89,7 @@ Template.Media.events({
             form_data.append("file", file_data) // Appending parameter named file with properties of file_field to form_data
             form_data.append("user_id", Meteor.userId()) // Adding extra parameters to form_data
             $.ajax({
-                url: Meteor.settings.public.api.storage + "/files", // Upload Script
+                url: "http://localhost/files", //Meteor.settings.public.api.storage + "/files", // Upload Script
                 dataType: 'json',
                 cache: false,
                 contentType: false,
